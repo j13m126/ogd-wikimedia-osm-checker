@@ -4,6 +4,7 @@ module.exports = {
   datasets: require('./datasets.js'),
   geocoder: require('./geocoder.js'),
   log: require('./log.js'),
+  'osm-status': require('./osm-status.js'),
   wikipedia: require('./wikipedia.js'),
   wikidata: require('./wikidata.js')
 }

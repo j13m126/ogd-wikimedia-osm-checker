@@ -22,7 +22,7 @@ function next () {
 
   const body = '[out:json];(' + queries.join('') + ');out tags bb;'
 
-  httpRequest('https://overpass-api.de/api/interpreter',
+  httpRequest('http://localhost:12345/api/interpreter',
     {
       method: 'POST',
       responseType: 'json',

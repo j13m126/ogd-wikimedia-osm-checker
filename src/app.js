@@ -19,6 +19,9 @@ const modules = [
 let dataset
 let place
 let ob
+let currentItems = []
+let checkAllAborted = false
+let searchActive = false
 
 let info
 
@@ -72,6 +75,16 @@ function init2 () {
 
   selectDataset.onchange = chooseDataset
 
+  const checkAllButton = document.getElementById('checkAll')
+  if (checkAllButton) {
+    checkAllButton.onclick = onCheckAllClick
+  }
+
+  const itemFilter = document.getElementById('itemFilter')
+  if (itemFilter) {
+    itemFilter.oninput = applyItemFilter
+  }
+
   if (global.location.hash) {
     choose(global.location.hash.substr(1))
   }
@@ -101,6 +114,9 @@ function updateDataset () {
   dataset = datasets[selectDataset.value]
   place = null
   ob = null
+  searchActive = false
+  const itemFilter = document.getElementById('itemFilter')
+  if (itemFilter) itemFilter.value = ''
 
   dataset.showInfo(content)
 
@@ -164,6 +180,7 @@ function choose (path) {
   if (!id) {
     const content = document.getElementById('content')
     dataset.showInfo(content)
+    appendOsmStatusLists(content)
     return null
   }
 
@@ -189,7 +206,7 @@ function choose (path) {
 
 function update () {
   const select = document.getElementById('placeFilter')
-  if (select.value === place) {
+  if (select.value === place && !searchActive) {
     return
   }
 
@@ -199,8 +216,13 @@ function update () {
     content.removeChild(content.firstChild)
   }
 
-  if (place === '') {
+  if (place === '' && !searchActive) {
     content.innerHTML = info
+    currentItems = []
+    const checkAllButton = document.getElementById('checkAll')
+    if (checkAllButton) {
+      checkAllButton.disabled = true
+    }
     showLast()
     return
   }
@@ -213,7 +235,7 @@ function update () {
   const dom = document.getElementById('data')
 
   const options = {}
-  if (dataset.refData.placeFilterField) {
+  if (dataset.refData.placeFilterField && place) {
     options.filter = {}
     options.filter[dataset.refData.placeFilterField] = place
   }
@@ -222,6 +244,12 @@ function update () {
   dataset.getItems(options, (err, items) => {
     loadingIndicator.end()
     if (err) { return global.alert(err) }
+
+    currentItems = items
+    const checkAllButton = document.getElementById('checkAll')
+    if (checkAllButton) {
+      checkAllButton.disabled = items.length === 0
+    }
 
     items.forEach((item, index) => {
       const id = dataset.refData.idField ? item[dataset.refData.idField] : index
@@ -246,15 +274,173 @@ function update () {
       dom.appendChild(tr)
     })
 
+    const tickTitles = {
+      full: 'In OpenStreetMap mit ref:at:bda und wikidata gefunden',
+      partial: 'In OpenStreetMap nur teilweise gefunden (ref:at:bda oder wikidata)',
+      none: 'Kein Eintrag mit ref:at:bda oder wikidata in der OpenStreetMap gefunden'
+    }
+
+    global.fetch('osm-status.cgi?dataset=' + encodeURIComponent(dataset.id))
+      .then(r => r.json())
+      .then(status => {
+        items.forEach((item, index) => {
+          const id = dataset.refData.idField ? item[dataset.refData.idField] : index
+          const itemStatus = status[id]
+          if (!itemStatus) return
+          const listEntry = document.getElementById(dataset.id + '-' + id)
+          if (!listEntry || listEntry.querySelector('.osm-confirmed')) return
+          const a = listEntry.querySelector('a')
+          if (!a) return
+          const statusName = itemStatus === true ? 'full' : itemStatus
+          const tick = document.createElement('span')
+          tick.className = 'osm-confirmed osm-' + statusName
+          tick.title = tickTitles[statusName] || ''
+          tick.textContent = '✓'
+          const title = a.querySelector('.title')
+          if (title) {
+            title.after(tick)
+          } else {
+            a.appendChild(tick)
+          }
+        })
+      })
+      .catch(() => {})
+
+    applyItemFilter()
     selectCurrent()
   })
 }
 
-function check (id, options = {}) {
+function applyItemFilter () {
+  const input = document.getElementById('itemFilter')
+  if (!input) return
+  const query = input.value.trim().toLowerCase()
+  const wasActive = searchActive
+  searchActive = query.length > 0
+
+  if (wasActive !== searchActive) {
+    place = null // force update() to re-render
+    update()
+    return
+  }
+
+  const table = document.getElementById('data')
+  if (!table) return
+
+  Array.from(table.getElementsByTagName('tr')).forEach(tr => {
+    if (!tr.id) return // skip header
+    if (!query) {
+      tr.style.display = ''
+      return
+    }
+    const text = tr.textContent.toLowerCase()
+    tr.style.display = text.includes(query) ? '' : 'none'
+  })
+}
+
+function appendOsmStatusLists (content) {
+  if (!dataset) return
+  const container = document.createElement('div')
+  container.className = 'osm-status-lists'
+  content.appendChild(container)
+  renderOsmStatusLists(container)
+}
+
+function renderOsmStatusLists (container) {
+  if (!dataset) return
+  const datasetId = dataset.id
+
+  while (container.firstChild) container.removeChild(container.firstChild)
+
+  global.fetch('osm-status.cgi?dataset=' + encodeURIComponent(datasetId))
+    .then(r => r.json())
+    .then(status => {
+      if (!dataset || dataset.id !== datasetId) return
+      const partialIds = Object.keys(status).filter(k => status[k] === 'partial')
+      const noneIds = Object.keys(status).filter(k => status[k] === 'none')
+      if (!partialIds.length && !noneIds.length) return
+
+      dataset.getItems({}, (err, items) => {
+        if (err) return
+        if (!dataset || dataset.id !== datasetId) return
+
+        const byId = {}
+        items.forEach((item, index) => {
+          const itemId = dataset.refData.idField ? item[dataset.refData.idField] : index
+          byId[itemId] = { item, index }
+        })
+
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = 'recheck-status'
+        button.textContent = 'Alle erneut prüfen'
+        button.onclick = () => onRecheckStatusClick(button, container, partialIds.concat(noneIds))
+        container.appendChild(button)
+
+        renderStatusList(container, 'Teilweise gefunden (partial)', partialIds, byId)
+        renderStatusList(container, 'Nicht gefunden (none)', noneIds, byId)
+      })
+    })
+    .catch(() => {})
+}
+
+let recheckAborted = false
+function onRecheckStatusClick (button, container, ids) {
+  if (button.dataset.running === '1') {
+    recheckAborted = true
+    return
+  }
+  if (!ids.length) return
+
+  recheckAborted = false
+  button.dataset.running = '1'
+  const originalLabel = button.textContent
+  button.textContent = 'Abbrechen'
+
+  async.eachSeries(ids, (id, next) => {
+    if (recheckAborted) return next()
+    check(id, {}, () => next())
+  }, () => {
+    button.dataset.running = ''
+    button.textContent = originalLabel
+    recheckAborted = false
+    renderOsmStatusLists(container)
+  })
+}
+
+function renderStatusList (parent, title, ids, byId) {
+  if (!ids.length) return
+  const h2 = document.createElement('h2')
+  h2.textContent = title + ' (' + ids.length + ')'
+  parent.appendChild(h2)
+
+  const ul = document.createElement('ul')
+  ids.forEach(id => {
+    const entry = byId[id]
+    if (!entry) return
+    const li = document.createElement('li')
+    const a = document.createElement('a')
+    a.href = '#' + dataset.id + '/' + id
+    const text = dataset.listFormat(entry.item, entry.index)
+    if (typeof text === 'string') {
+      a.innerHTML = text
+    } else {
+      a.appendChild(text)
+    }
+    li.appendChild(a)
+    ul.appendChild(li)
+  })
+  parent.appendChild(ul)
+}
+
+function check (id, options = {}, done) {
   loadingIndicator.start()
   dataset.getItem(id, (err, entry) => {
     loadingIndicator.end()
-    if (err) { return global.alert(err) }
+    if (err) {
+      if (done) return done(err)
+      return global.alert(err)
+    }
 
     const div = document.getElementById('details')
 
@@ -294,15 +480,59 @@ function check (id, options = {}) {
     ob = new Examinee(id, entry, dataset)
     ob.initMessages(div)
     ob.runChecks(dataset, options, (err, result) => {
-      if (err) { global.alert(err) }
+      if (err && !done) { global.alert(err) }
 
       loadingIndicator.end()
+
+      if (done) done(err, result)
     })
 
     document.title = dataset.title + '/' + ob.id + ' - ogd-wikimedia-osm-checker'
 
     selectCurrent()
   })
+}
+
+function onCheckAllClick () {
+  const button = document.getElementById('checkAll')
+  if (!button) return
+
+  if (button.dataset.running === '1') {
+    checkAllAborted = true
+    return
+  }
+
+  if (!dataset || !currentItems.length) return
+
+  const visibleIds = collectVisibleItemIds()
+  if (!visibleIds.length) return
+
+  checkAllAborted = false
+  button.dataset.running = '1'
+  const originalLabel = button.textContent
+  button.textContent = 'Abbrechen'
+
+  async.eachSeries(visibleIds, (id, next) => {
+    if (checkAllAborted) return next()
+    check(id, {}, () => next())
+  }, () => {
+    button.dataset.running = ''
+    button.textContent = originalLabel
+    checkAllAborted = false
+  })
+}
+
+function collectVisibleItemIds () {
+  const ids = []
+  const prefix = dataset.id + '-'
+  currentItems.forEach((item, index) => {
+    const id = dataset.refData.idField ? item[dataset.refData.idField] : index
+    const tr = document.getElementById(prefix + id)
+    if (tr && tr.style.display !== 'none') {
+      ids.push(id)
+    }
+  })
+  return ids
 }
 
 function selectCurrent () {

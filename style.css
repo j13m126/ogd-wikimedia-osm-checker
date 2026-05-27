@@ -1,5 +1,18 @@
 a .title {
 }
+.osm-confirmed {
+  font-weight: bold;
+  margin-right: 0.25em;
+}
+.osm-confirmed.osm-full {
+  color: green;
+}
+.osm-confirmed.osm-partial {
+  color: #c8a800;
+}
+.osm-confirmed.osm-none {
+  color: red;
+}
 a .address {
   float: right;
   font-size: 0.75em;
@@ -13,10 +26,18 @@ a .address {
   width: calc(50% - 1px);
   border-right: 1px solid black;
 }
-#selector > div > select {
-  width: 49%;
+#filter {
+  display: flex;
+  gap: 4px;
+}
+#filter > select,
+#filter > input {
+  flex: 1 1 auto;
+  min-width: 0;
   box-sizing: border-box;
-  display: inline-block;
+}
+#filter > #checkAll {
+  flex: 0 0 auto;
 }
 table#data {
   width: 100%;

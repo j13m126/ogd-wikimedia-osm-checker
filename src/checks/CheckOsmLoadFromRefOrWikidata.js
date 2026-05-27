@@ -5,6 +5,41 @@ const osmFormat = require('../osmFormat.js')
 const Check = require('../Check.js')
 const idFromRefOrRefValue = require('../idFromRefOrRefValue')
 
+function saveOsmStatus (ob, status) {
+  global.fetch('osm-status.cgi?action=set&dataset=' + encodeURIComponent(ob.dataset.id) + '&id=' + encodeURIComponent(ob.id) + '&status=' + encodeURIComponent(status))
+    .then(() => updateListTick(ob.dataset.id, ob.id, status))
+    .catch(() => {})
+}
+
+const TICK_TITLES = {
+  full: 'In OpenStreetMap mit ref:at:bda und wikidata gefunden',
+  partial: 'In OpenStreetMap nur teilweise gefunden (ref:at:bda oder wikidata)',
+  none: 'Kein Eintrag mit ref:at:bda oder wikidata in der OpenStreetMap gefunden'
+}
+
+function insertTick (listEntry, tick) {
+  const a = listEntry.querySelector('a')
+  if (!a) return
+  const title = a.querySelector('.title')
+  if (title) {
+    title.after(tick)
+  } else {
+    a.appendChild(tick)
+  }
+}
+
+function updateListTick (datasetId, itemId, status) {
+  const listEntry = document.getElementById(datasetId + '-' + itemId)
+  if (!listEntry) return
+  const existing = listEntry.querySelector('.osm-confirmed')
+  if (existing) existing.remove()
+  const tick = document.createElement('span')
+  tick.className = 'osm-confirmed osm-' + status
+  tick.title = TICK_TITLES[status] || ''
+  tick.textContent = '✓'
+  insertTick(listEntry, tick)
+}
+
 class CheckOsmLoadFromRefOrWikidata extends Check {
   // result:
   // - null/false: not finished yet
@@ -69,6 +104,7 @@ class CheckOsmLoadFromRefOrWikidata extends Check {
     }
 
     if (refWdResult.length && refBdaResult.length && refWdResult.length === refBdaResult.length) {
+      saveOsmStatus(ob, 'full')
       return ob.message('osm', STATUS.SUCCESS, refBdaResult.length + ' Objekt via <tt>' + osmRefField + '=' + id + '</tt> und <tt>wikidata=' + wikidataId + '</tt> gefunden:<ul>' + refBdaResult.map(el => '<li>' + osmFormat(el, ob) + '</li>').join('') + '</ul>')
     }
 
@@ -83,6 +119,7 @@ class CheckOsmLoadFromRefOrWikidata extends Check {
         }
       })
 
+      saveOsmStatus(ob, 'partial')
       return ob.message('osm', STATUS.SUCCESS, refBdaResult.length + ' Objekt via <tt>' + osmRefField + '=' + id + '</tt> gefunden: ' + refBdaResult.map(el => '<li>' + osmFormat(el, ob) + '</li>').join('') + '</ul>')
     }
 
@@ -98,10 +135,12 @@ class CheckOsmLoadFromRefOrWikidata extends Check {
         ob.message('osm', STATUS.ERROR, 'Kein Eintrag mit <tt>' + osmRefField + '=' + id + '</tt> in der OpenStreetMap gefunden!')
       }
 
+      saveOsmStatus(ob, 'partial')
       ob.message('osm', STATUS.SUCCESS, refWdResult.length + ' Objekt via <tt>wikidata=' + wikidataId + '</tt> gefunden: ' + refWdResult.map(el => '<li>' + osmFormat(el, ob) + '</li>').join('') + '</ul>')
       return true
     }
 
+    saveOsmStatus(ob, 'none')
     if (id === null) {
       return ob.message('osm', STATUS.ERROR, 'Kein Eintrag ' + (wikidataId ? 'mit <tt>wikidata=' + wikidataId + '</tt>' : '') + ' in der OpenStreetMap gefunden!')
     } else {

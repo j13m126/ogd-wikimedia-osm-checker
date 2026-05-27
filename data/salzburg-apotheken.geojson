@@ -1,0 +1,2900 @@
+{
+  "displayFieldName": "",
+  "fieldAliases": {
+    "OBJECTID": "OBJECTID_1",
+    "strasse": "Straße",
+    "plz": "PLZ",
+    "ort": "Ort",
+    "bnum": "Betriebsnummer",
+    "name": "Name",
+    "typ": "Typ",
+    "tel": "Telefon",
+    "fax": "Fax",
+    "email": "E-Mail",
+    "url": "Homepage",
+    "barrierefreiheit": "Barrierefreiheit",
+    "defibrillator": "Defibrillator",
+    "teilnahme_1450": "Teilnahme 1450",
+    "ADRCD": "Adresscode",
+    "SUBCD": "Subcode Adresse",
+    "HNR": "Hausnummer"
+  },
+  "geometryType": "esriGeometryPoint",
+  "spatialReference": {
+    "wkid": 31258,
+    "latestWkid": 31258
+  },
+  "fields": [
+    {
+      "name": "OBJECTID",
+      "type": "esriFieldTypeOID",
+      "alias": "OBJECTID_1"
+    },
+    {
+      "name": "strasse",
+      "type": "esriFieldTypeString",
+      "alias": "Straße",
+      "length": 100
+    },
+    {
+      "name": "plz",
+      "type": "esriFieldTypeInteger",
+      "alias": "PLZ"
+    },
+    {
+      "name": "ort",
+      "type": "esriFieldTypeString",
+      "alias": "Ort",
+      "length": 100
+    },
+    {
+      "name": "bnum",
+      "type": "esriFieldTypeString",
+      "alias": "Betriebsnummer",
+      "length": 1073741822
+    },
+    {
+      "name": "name",
+      "type": "esriFieldTypeString",
+      "alias": "Name",
+      "length": 1073741822
+    },
+    {
+      "name": "typ",
+      "type": "esriFieldTypeString",
+      "alias": "Typ",
+      "length": 1073741822
+    },
+    {
+      "name": "tel",
+      "type": "esriFieldTypeString",
+      "alias": "Telefon",
+      "length": 1073741822
+    },
+    {
+      "name": "fax",
+      "type": "esriFieldTypeString",
+      "alias": "Fax",
+      "length": 1073741822
+    },
+    {
+      "name": "email",
+      "type": "esriFieldTypeString",
+      "alias": "E-Mail",
+      "length": 1073741822
+    },
+    {
+      "name": "url",
+      "type": "esriFieldTypeString",
+      "alias": "Homepage",
+      "length": 1073741822
+    },
+    {
+      "name": "barrierefreiheit",
+      "type": "esriFieldTypeInteger",
+      "alias": "Barrierefreiheit"
+    },
+    {
+      "name": "defibrillator",
+      "type": "esriFieldTypeInteger",
+      "alias": "Defibrillator"
+    },
+    {
+      "name": "teilnahme_1450",
+      "type": "esriFieldTypeInteger",
+      "alias": "Teilnahme 1450"
+    },
+    {
+      "name": "ADRCD",
+      "type": "esriFieldTypeString",
+      "alias": "Adresscode",
+      "length": 7
+    },
+    {
+      "name": "SUBCD",
+      "type": "esriFieldTypeString",
+      "alias": "Subcode Adresse",
+      "length": 3
+    },
+    {
+      "name": "HNR",
+      "type": "esriFieldTypeString",
+      "alias": "Hausnummer",
+      "length": 6
+    }
+  ],
+  "features": [
+    {
+      "properties": {
+        "OBJECTID": 1,
+        "strasse": "Markt",
+        "plz": 5441,
+        "ort": "Abtenau",
+        "bnum": "a70017",
+        "name": "Apotheke Abtenau",
+        "typ": "öffentliche",
+        "tel": "+43 62432255",
+        "fax": "+43 624322554",
+        "email": "mag.karin.planitzer@sbg.at",
+        "url": "www.apotheke-abtenau.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7321756",
+        "SUBCD": "001",
+        "HNR": "253a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.343449429588894,
+          47.56509507249961
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 2,
+        "strasse": "Böcksteiner Bundesstraße",
+        "plz": 5640,
+        "ort": "Bad Gastein",
+        "bnum": "a70025",
+        "name": "Kurapotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64342218",
+        "fax": "+43 6434221826",
+        "email": "strasser.diemut@apotheke-gastein.at",
+        "url": "apotheke-gastein.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7356439",
+        "SUBCD": "001",
+        "HNR": "1c"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.133930105905,
+          47.10925431342027
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 3,
+        "strasse": "Pyrkerstraße",
+        "plz": 5630,
+        "ort": "Bad Hofgastein",
+        "bnum": "a70033",
+        "name": "Kurapotheke Bad Hofgastein",
+        "typ": "öffentliche",
+        "tel": "+43 64326204",
+        "fax": "+43 6432620420",
+        "email": "kurapotheke.badhofgastein@aon.at",
+        "url": "www.kurapotheke-badhofgastein.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5676433",
+        "SUBCD": "001",
+        "HNR": "5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.108092514126925,
+          47.170700385363546
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 4,
+        "strasse": "Bahnhofstraße",
+        "plz": 5500,
+        "ort": "Bischofshofen",
+        "bnum": "a70041",
+        "name": "Marien-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64622213",
+        "fax": "+43 6462221360",
+        "email": "info@die-marienapotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5679300",
+        "SUBCD": "001",
+        "HNR": "5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.218389050010176,
+          47.416217579129594
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 5,
+        "strasse": "Bayrhamerplatz",
+        "plz": 5400,
+        "ort": "Hallein",
+        "bnum": "a70068",
+        "name": "Stadtapotheke Hallein",
+        "typ": "öffentliche",
+        "tel": "+43 624580622",
+        "fax": "+43 62458062260",
+        "email": "office@stadtapotheke-hallein.at",
+        "url": "www.stadtapotheke-hallein.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5631681",
+        "SUBCD": "001",
+        "HNR": "7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.09445861450349,
+          47.682232068498244
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 6,
+        "strasse": "Davisstraße",
+        "plz": 5400,
+        "ort": "Hallein",
+        "bnum": "a70076",
+        "name": "Burgfried-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 624580655",
+        "fax": "+43 624580655",
+        "email": "info@burgfried-apotheke.at",
+        "url": "www.burgfried-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5631872",
+        "SUBCD": "001",
+        "HNR": "2a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.098098694600823,
+          47.682651251436496
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 7,
+        "strasse": "Marktplatz",
+        "plz": 5163,
+        "ort": "Mattsee",
+        "bnum": "a70084",
+        "name": "Tassilo-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 62175275",
+        "fax": "+43 6217527516",
+        "email": "office@tassilo-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5658796",
+        "SUBCD": "001",
+        "HNR": "2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.104535728476124,
+          47.97048664334438
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 8,
+        "strasse": "Kirchgasse",
+        "plz": 5730,
+        "ort": "Mittersill",
+        "bnum": "a70092",
+        "name": "Tauern-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 65626204",
+        "fax": "+43 656262049",
+        "email": "office@tauern-apotheke.at",
+        "url": "www.tauern-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5707874",
+        "SUBCD": "001",
+        "HNR": "10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.482158286740859,
+          47.28023950962242
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 9,
+        "strasse": "Hauptstraße",
+        "plz": 5202,
+        "ort": "Neumarkt am Wallersee",
+        "bnum": "a70106",
+        "name": "Apotheke \"Zum goldenen Engel\"",
+        "typ": "öffentliche",
+        "tel": "+43 62165286",
+        "fax": "+43 621652864",
+        "email": "buero@apo-neumarkt.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5659105",
+        "SUBCD": "001",
+        "HNR": "18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.224688350957873,
+          47.944036034343206
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 10,
+        "strasse": "Brückenstraße",
+        "plz": 5110,
+        "ort": "Oberndorf bei Salzburg",
+        "bnum": "a70114",
+        "name": "Apotheke \"Zur Mariahilf\"",
+        "typ": "öffentliche",
+        "tel": "+43 62724223",
+        "fax": "+43 627242234",
+        "email": "zurmariahilf@apotheken-oberndorf.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5660957",
+        "SUBCD": "001",
+        "HNR": "7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.940892957858928,
+          47.939624661839865
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 11,
+        "strasse": "Ernest-Thun-Gasse",
+        "plz": 5550,
+        "ort": "Radstadt",
+        "bnum": "a70122",
+        "name": "Stadtapotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64525959",
+        "fax": "+43 645259599",
+        "email": "apotheke.radstadt@sbg.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5686927",
+        "SUBCD": "001",
+        "HNR": "2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.462357446178979,
+          47.38532427825134
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 12,
+        "strasse": "Bahnhofstraße",
+        "plz": 5760,
+        "ort": "Saalfelden am Steinernen Meer",
+        "bnum": "a70130",
+        "name": "Stadtapotheke \"Zum heiligen Antonius\"",
+        "typ": "öffentliche",
+        "tel": "+43 658272257",
+        "fax": "+43 6582722574",
+        "email": "apotheke.saalfelden@aon.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5713603",
+        "SUBCD": "001",
+        "HNR": "1a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.846694865310232,
+          47.42692632265084
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 13,
+        "strasse": "Alter Markt",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70149",
+        "name": "Alte f.e. Hofapotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662843623",
+        "fax": "+43 66284362375",
+        "email": "lukas.danninger@danninger-gruppe.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5606840",
+        "SUBCD": "001",
+        "HNR": "6"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.045376356834867,
+          47.79935772873298
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 14,
+        "strasse": "Getreidegasse",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70157",
+        "name": "Apotheke \"Zum goldenen Biber\"",
+        "typ": "öffentliche",
+        "tel": "+43 662843134",
+        "fax": "+43 662843149",
+        "email": "biberapotheke@aon.at",
+        "url": "www.biberapotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5611811",
+        "SUBCD": "001",
+        "HNR": "4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.043996878682705,
+          47.80009997544004
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 15,
+        "strasse": "Linzer Gasse",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70165",
+        "name": "Engel-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662873221",
+        "fax": "+43 6628732211",
+        "email": "rebitzer@engelapotheke.at",
+        "url": "www.engelapotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5617390",
+        "SUBCD": "001",
+        "HNR": "5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.045396084789356,
+          47.80221515268821
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 16,
+        "strasse": "Gaisbergstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70173",
+        "name": "Borromäus-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662643655",
+        "fax": "+43 66264365575",
+        "email": "office@borromaeuspoint.at",
+        "url": "www.borromaeus-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5611368",
+        "SUBCD": "001",
+        "HNR": "20"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.067564969187272,
+          47.80171679065363
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 17,
+        "strasse": "Linzer Gasse",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70181",
+        "name": "Wolf-Dietrich-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662872629",
+        "fax": "+43 66287262914",
+        "email": "wdapo@sbg.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5617456",
+        "SUBCD": "001",
+        "HNR": "78"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.049702863765763,
+          47.804617179435425
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 18,
+        "strasse": "Petersbrunnstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70203",
+        "name": "St. Erhard-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 66284363011",
+        "fax": "+43 66284363016",
+        "email": "office@sterhardapotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5620349",
+        "SUBCD": "001",
+        "HNR": "13"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.052221946176179,
+          47.794160800709996
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 19,
+        "strasse": "Elisabethstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70211",
+        "name": "Elisabeth-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662871484",
+        "fax": "+43 6628714844",
+        "email": "elisabeth.apotheke@utanet.at",
+        "url": "www.elisabethapotheke-salzburg.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5609248",
+        "SUBCD": "001",
+        "HNR": "1A"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.041683675228127,
+          47.81001386520124
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 20,
+        "strasse": "Mirabellplatz",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70238",
+        "name": "Salvator-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662871411",
+        "fax": "+43 662882433",
+        "email": "office@salvatorapothekesalzburg.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5618247",
+        "SUBCD": "001",
+        "HNR": "5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0433397342548,
+          47.80536088773915
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 21,
+        "strasse": "Maxglaner Hauptstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70246",
+        "name": "Apotheke \"Zum heiligen Rupertus\"",
+        "typ": "öffentliche",
+        "tel": "+43 662827765",
+        "fax": "+43 6628277654",
+        "email": "office@rupertus-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5617869",
+        "SUBCD": "001",
+        "HNR": "13"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.024593720080686,
+          47.79649919767413
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 22,
+        "strasse": "Müllner Hauptstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70254",
+        "name": "Landesapotheke am St. Johanns-Spital",
+        "typ": "öffentliche",
+        "tel": "+43 662432111",
+        "fax": "+43 6624321116",
+        "email": "aporewe@salk.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7223446",
+        "SUBCD": "001",
+        "HNR": "50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.030545502444557,
+          47.80668603011415
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 23,
+        "strasse": "Linzer Bundesstraße",
+        "plz": 5023,
+        "ort": "Salzburg",
+        "bnum": "a70262",
+        "name": "Gnigler Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662640644",
+        "fax": "+43 6626406444",
+        "email": "office@gnigler-apotheke.at",
+        "url": "www.gnigler-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7387404",
+        "SUBCD": "001",
+        "HNR": "30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.068316876073391,
+          47.813614925542545
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 24,
+        "strasse": "Hans Kappacherstraße",
+        "plz": 5600,
+        "ort": "Sankt Johann im Pongau",
+        "bnum": "a70270",
+        "name": "Johannes Stadtapotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64124044",
+        "fax": "+43 6412404440",
+        "email": "chef@johannes-stadtapotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5688715",
+        "SUBCD": "001",
+        "HNR": "8"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.202097548839998,
+          47.34700378991147
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 25,
+        "strasse": "Salzburgerstraße",
+        "plz": 5620,
+        "ort": "Schwarzach im Pongau",
+        "bnum": "a70289",
+        "name": "Apotheke zur Sonnenterrasse",
+        "typ": "öffentliche",
+        "tel": "+43 64154393",
+        "fax": "+43 641543934",
+        "email": "meine@apo-theke.com",
+        "url": "www.apo-theke.com",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5691438",
+        "SUBCD": "001",
+        "HNR": "51"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.14771251567396,
+          47.320331709853725
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 26,
+        "strasse": "Krimpling",
+        "plz": 5071,
+        "ort": "Wals",
+        "bnum": "a70297",
+        "name": "Apotheke Wals",
+        "typ": "öffentliche",
+        "tel": "+43 662851116",
+        "fax": "+43 66285111615",
+        "email": "info@apotheke-wals.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7612639",
+        "SUBCD": "001",
+        "HNR": "10"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.97277412215763,
+          47.788674526450144
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 27,
+        "strasse": "Kuenburgstraße",
+        "plz": 5580,
+        "ort": "Tamsweg",
+        "bnum": "a70300",
+        "name": "St. Leonhard-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64742424",
+        "fax": "+43 64747993",
+        "email": "info@apoleonhard.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7239867",
+        "SUBCD": "001",
+        "HNR": "9"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.811905488406683,
+          47.12843281669631
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 28,
+        "strasse": "Bahnhofstraße",
+        "plz": 5700,
+        "ort": "Zell am See",
+        "bnum": "a70319",
+        "name": "See-Apotheke Zell am See",
+        "typ": "öffentliche",
+        "tel": "+43 654272581",
+        "fax": "+43 65427258116",
+        "email": "office@see-apotheke.co.at",
+        "url": "www.see-apotheke.co.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5720495",
+        "SUBCD": "001",
+        "HNR": "3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.798173744797241,
+          47.32254629611964
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 29,
+        "strasse": "Ignaz-Harrer-Straße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70327",
+        "name": "Lehener Löwen-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662431640",
+        "fax": "+43 66243164016",
+        "email": "office@lehener-loewenapotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5614151",
+        "SUBCD": "001",
+        "HNR": "54"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.026599847868544,
+          47.81168517286056
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 30,
+        "strasse": "Hauptstraße",
+        "plz": 5201,
+        "ort": "Seekirchen am Wallersee",
+        "bnum": "a70335",
+        "name": "Flachgau-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 62126531",
+        "fax": "+43 6212653140",
+        "email": "flachgauapo@sol.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5673403",
+        "SUBCD": "001",
+        "HNR": "16a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.126415538158547,
+          47.89279974483854
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 31,
+        "strasse": "Friedensstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70343",
+        "name": "Josefiau-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662620210",
+        "fax": "+43 6626202104",
+        "email": "apo@josefiau-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7135495",
+        "SUBCD": "001",
+        "HNR": "3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.065649138196525,
+          47.7857909926139
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 32,
+        "strasse": "Raintal",
+        "plz": 5340,
+        "ort": "Sankt Gilgen",
+        "bnum": "a70351",
+        "name": "Paracelsus-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 62272406",
+        "fax": "+43 622724064",
+        "email": "gesund@paracelsusapotheke.at",
+        "url": "www.paracelsusapotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5664611",
+        "SUBCD": "001",
+        "HNR": "2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.362539069994163,
+          47.76733295822838
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 33,
+        "strasse": "Neutorstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70378",
+        "name": "Riedenburg-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662844616",
+        "fax": "+43 66284461620",
+        "email": "apo@riedenburg-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7097255",
+        "SUBCD": "001",
+        "HNR": "32"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.031615777150998,
+          47.79774705787336
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 34,
+        "strasse": "Münchner Bundesstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70386",
+        "name": "Paracelsus-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662431154",
+        "fax": "+43 662430818",
+        "email": "paracelsus.apotheke@strauss1.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5619167",
+        "SUBCD": "001",
+        "HNR": "17"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.01846198050724,
+          47.81830061362423
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 35,
+        "strasse": "Marktstraße",
+        "plz": 5082,
+        "ort": "Grödig",
+        "bnum": "a70394",
+        "name": "Untersberg-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 624672474",
+        "fax": "+43 62467247492",
+        "email": "office@untersberg-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5651150",
+        "SUBCD": "001",
+        "HNR": "19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.039722555688964,
+          47.73825883646404
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 36,
+        "strasse": "Kleßheimer Allee",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70408",
+        "name": "Adler-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662432648",
+        "fax": "+43 662422685",
+        "email": "m.roethleitner@aon.at",
+        "url": "www.adlerapo.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5615909",
+        "SUBCD": "001",
+        "HNR": "96"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.005411704398892,
+          47.81194009239064
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 37,
+        "strasse": "Brucker Bundesstraße",
+        "plz": 5700,
+        "ort": "Zell am See",
+        "bnum": "a70416",
+        "name": "Adler-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 654257382",
+        "fax": "+43 6542573827",
+        "email": "info@adlerapotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5720591",
+        "SUBCD": "001",
+        "HNR": "29"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.793040142164575,
+          47.306397443847715
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 38,
+        "strasse": "Gasteiner Straße",
+        "plz": 5500,
+        "ort": "Bischofshofen",
+        "bnum": "a70424",
+        "name": "Löwen-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64622772",
+        "fax": "+43 6462277219",
+        "email": "info@loewenapotheke-bischofshofen.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7430308",
+        "SUBCD": "001",
+        "HNR": "44"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.21642100095576,
+          47.411266577675114
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 39,
+        "strasse": "Aigner Straße",
+        "plz": 5026,
+        "ort": "Salzburg",
+        "bnum": "a70432",
+        "name": "Apotheke \"Zum heiligen Geist\"",
+        "typ": "öffentliche",
+        "tel": "+43 662623286",
+        "fax": "+43 66262328674",
+        "email": "geist@aigenapo.at",
+        "url": "www.aigenapo.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5606456",
+        "SUBCD": "001",
+        "HNR": "50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.074671676600905,
+          47.7901396638465
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 40,
+        "strasse": "Ginzkeyplatz",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70440",
+        "name": "Salzach-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662620193",
+        "fax": "+43 6626201934",
+        "email": "office@salzachapo.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5611880",
+        "SUBCD": "001",
+        "HNR": "9"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.071348245627263,
+          47.773156279875046
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 41,
+        "strasse": "Halleiner Landesstraße",
+        "plz": 5411,
+        "ort": "Oberalm",
+        "bnum": "a70459",
+        "name": "Apotheke Oberalm",
+        "typ": "öffentliche",
+        "tel": "+43 624580710",
+        "fax": "+43 62458071020",
+        "email": "info@apotheke-oberalm.at",
+        "url": "www.apotheke-oberalm.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5636762",
+        "SUBCD": "001",
+        "HNR": "34"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.100147547579466,
+          47.697960458724786
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 42,
+        "strasse": "Markt",
+        "plz": 5440,
+        "ort": "Golling an der Salzach",
+        "bnum": "a70467",
+        "name": "Apotheke \"Zur Gemse\"",
+        "typ": "öffentliche",
+        "tel": "+43 62444231",
+        "fax": "+43 8109554182702",
+        "email": "leitung@apothekegemse.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5630524",
+        "SUBCD": "001",
+        "HNR": "43"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.168260547006525,
+          47.59877794360344
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 43,
+        "strasse": "Itzlinger Hauptstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70475",
+        "name": "Antonius Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662450028",
+        "fax": "+43 6624500284",
+        "email": "office@antoniusapo.at",
+        "url": "www.antoniusapo.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5614469",
+        "SUBCD": "001",
+        "HNR": "2A"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.044563926369207,
+          47.81911773566147
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 44,
+        "strasse": "Marktstraße",
+        "plz": 5582,
+        "ort": "Sankt Michael im Lungau",
+        "bnum": "a70483",
+        "name": "Apotheke \"Zum heiligen Michael\"",
+        "typ": "öffentliche",
+        "tel": "+43 64778204",
+        "fax": "+43 647782044",
+        "email": "apotheke@aposm.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5696636",
+        "SUBCD": "001",
+        "HNR": "87"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.638519028155041,
+          47.09914277715242
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 45,
+        "strasse": "Fachmarktstraße",
+        "plz": 5071,
+        "ort": "Himmelreich",
+        "bnum": "a70491",
+        "name": "Apotheke Himmelreich",
+        "typ": "öffentliche",
+        "tel": "+43 662854988",
+        "fax": "+43 6628549884",
+        "email": "info@apotheke-himmelreich.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7261837",
+        "SUBCD": "001",
+        "HNR": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.98654840644192,
+          47.79255844676707
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 46,
+        "strasse": "Marktplatz",
+        "plz": 5204,
+        "ort": "Straßwalchen",
+        "bnum": "a70505",
+        "name": "Apotheke \"Zum heiligen Martin\"",
+        "typ": "öffentliche",
+        "tel": "+43 62158585",
+        "fax": "+43 621585854",
+        "email": "info@apotheke-strasswalchen.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5666580",
+        "SUBCD": "001",
+        "HNR": "14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.254101890336054,
+          47.97945935786113
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 47,
+        "strasse": "Glemmtaler Landesstraße",
+        "plz": 5753,
+        "ort": "Saalbach",
+        "bnum": "a70513",
+        "name": "Alpen-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 65416282",
+        "fax": "+43 654162824",
+        "email": "office@alpenapotheke.at",
+        "url": "www.alpenapotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5713114",
+        "SUBCD": "001",
+        "HNR": "23"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.632049081852355,
+          47.390771523692415
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 48,
+        "strasse": "Nonntaler Hauptstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70521",
+        "name": "Fürstenallee-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662821964",
+        "fax": "+43 6628219644",
+        "email": "apotheke@fuerstenallee.at",
+        "url": "www.fuerstenallee.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5619656",
+        "SUBCD": "001",
+        "HNR": "61"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.052384949115757,
+          47.785015837540996
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 49,
+        "strasse": "Leogangerstraße",
+        "plz": 5760,
+        "ort": "Dorfheim",
+        "bnum": "a70548",
+        "name": "Pinzgau-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 658274103",
+        "fax": "+43 6582741033",
+        "email": "info@pinzgau-apotheke.at",
+        "url": "www.pinzgau-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5714298",
+        "SUBCD": "002",
+        "HNR": "39"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.84013912243413,
+          47.42980542627979
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 50,
+        "strasse": "Zellerstraße",
+        "plz": 5671,
+        "ort": "Bruck an der Großglocknerstraße",
+        "bnum": "a70556",
+        "name": "Bären-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 65456279",
+        "fax": "+43 6545627914",
+        "email": "info@apotheke-bruck.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5701598",
+        "SUBCD": "001",
+        "HNR": "9"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.823403816901761,
+          47.28806512679923
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 51,
+        "strasse": "Markt",
+        "plz": 5431,
+        "ort": "Kuchl",
+        "bnum": "a70564",
+        "name": "Apotheke Zum Heiligen Josef",
+        "typ": "öffentliche",
+        "tel": "+43 62446949",
+        "fax": "+43 6244694915",
+        "email": "apotheke.kuchl@aon.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5635010",
+        "SUBCD": "002",
+        "HNR": "26"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.1457862480809,
+          47.62688120349339
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 52,
+        "strasse": "Ignaz Glaser Straße",
+        "plz": 5111,
+        "ort": "Bürmoos",
+        "bnum": "a70572",
+        "name": "Apotheke Bürmoos",
+        "typ": "öffentliche",
+        "tel": "+43 62747333",
+        "fax": "+43 6274733333",
+        "email": "office@apobuermoos.at",
+        "url": "www.apobuermoos.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5644124",
+        "SUBCD": "002",
+        "HNR": "48"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.921237418156968,
+          47.9833376106964
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 53,
+        "strasse": "Lofer",
+        "plz": 5090,
+        "ort": "Lofer",
+        "bnum": "a70580",
+        "name": "St. Rupertus-Apotheke Lofer",
+        "typ": "öffentliche",
+        "tel": "+43 65887170",
+        "fax": "+43 658871704",
+        "email": "office@apotheke-lofer.at",
+        "url": "www.apotheke-lofer.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5705822",
+        "SUBCD": "002",
+        "HNR": "310"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.696125935881273,
+          47.586705430598414
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 54,
+        "strasse": "Dorfstraße",
+        "plz": 5101,
+        "ort": "Bergheim",
+        "bnum": "a70599",
+        "name": "Apotheke Bergheim",
+        "typ": "öffentliche",
+        "tel": "+43 662454043",
+        "fax": "+43 662454043",
+        "email": "apotheke.bergheim@aon.at",
+        "url": "www.apotheke-bergheim.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5641985",
+        "SUBCD": "001",
+        "HNR": "33"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.02355198642314,
+          47.839517194776455
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 55,
+        "strasse": "Obere Marktstraße",
+        "plz": 5541,
+        "ort": "Altenmarkt im Pongau",
+        "bnum": "a70602",
+        "name": "Tauern-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64527875",
+        "fax": "+43 64527427",
+        "email": "tauern.apotheke@sbg.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5675661",
+        "SUBCD": "001",
+        "HNR": "46"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4178878588691,
+          47.38119215308586
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 56,
+        "strasse": "Dorfplatz",
+        "plz": 5531,
+        "ort": "Eben im Pongau",
+        "bnum": "f70602",
+        "name": "Apotheke am Dorfplatz",
+        "typ": "Filiale",
+        "tel": "+43 645880358",
+        "fax": "+43 64527427",
+        "email": "apotheke.eben@a1business.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5681362",
+        "SUBCD": "001",
+        "HNR": "60"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.395692822912897,
+          47.40709556927818
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 57,
+        "strasse": "Gabelsbergerstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70610",
+        "name": "Virgil-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662882413",
+        "fax": "+43 66288241320",
+        "email": "office@virgil-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5611150",
+        "SUBCD": "001",
+        "HNR": "7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.047484439137145,
+          47.80957664108671
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 58,
+        "strasse": "Sigmund-Thun-Straße",
+        "plz": 5710,
+        "ort": "Kaprun",
+        "bnum": "a70629",
+        "name": "Steinbock-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 65478669",
+        "fax": "+43 65478751",
+        "email": "info@apotheke-kaprun.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5703091",
+        "SUBCD": "001",
+        "HNR": "22"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.758381178419533,
+          47.27297647290385
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 59,
+        "strasse": "Dorfstraße",
+        "plz": 5721,
+        "ort": "Piesendorf",
+        "bnum": "f70629",
+        "name": "Filialapotheke Piesendorf",
+        "typ": "Filiale",
+        "tel": "+43 654920119",
+        "fax": "+43 65478751",
+        "email": "piesendorf@apotheke-kaprun.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5710566",
+        "SUBCD": "001",
+        "HNR": "4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.716206676065866,
+          47.29200237491066
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 60,
+        "strasse": "Markt",
+        "plz": 5450,
+        "ort": "Werfen",
+        "bnum": "a70637",
+        "name": "Sonnen-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 64685282",
+        "fax": "+43 646852822",
+        "email": "info@sonnenapotheke-werfen.at",
+        "url": "www.sonnenapotheke-werfen.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5693360",
+        "SUBCD": "001",
+        "HNR": "23"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.189048753400558,
+          47.47713916163256
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 61,
+        "strasse": "Siebenstädterstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70645",
+        "name": "Anna Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662433643",
+        "fax": "+43 66243364315",
+        "email": "office@anna-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5623291",
+        "SUBCD": "001",
+        "HNR": "14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.033335360513414,
+          47.81221375756379
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 62,
+        "strasse": "Karl-Wurmb-Straße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70653",
+        "name": "Bahnhof-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662456555",
+        "fax": "+43 66245655555",
+        "email": "office@bahnhofapotheke-salzburg.at",
+        "url": "www.bahnhofapotheke-salzburg.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7335824",
+        "SUBCD": "001",
+        "HNR": "2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.044862611038416,
+          47.81414687186555
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 63,
+        "strasse": "Moosstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70661",
+        "name": "Moos-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662820278",
+        "fax": "+43 66282027815",
+        "email": "moos.apo@aon.at",
+        "url": "www.apothekemoos.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7524394",
+        "SUBCD": "001",
+        "HNR": "15"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.029075022369064,
+          47.792529309811385
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 64,
+        "strasse": "Salzachtalbundesstraße",
+        "plz": 5081,
+        "ort": "Anif",
+        "bnum": "a70688",
+        "name": "Schloss-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 624676016",
+        "fax": "+43 6246760164",
+        "email": "info@schlossapothekeanif.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7080119",
+        "SUBCD": "001",
+        "HNR": "4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.066983375801383,
+          47.74646097131608
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 65,
+        "strasse": "Münchner Bundesstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70696",
+        "name": "Apotheke \"Zum heiligen Petrus\"",
+        "typ": "öffentliche",
+        "tel": "+43 662430505",
+        "fax": "+43 6624305054",
+        "email": "office@apothekepetrus.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5619231",
+        "SUBCD": "001",
+        "HNR": "116"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.004516490805859,
+          47.82957728285427
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 66,
+        "strasse": "Kirchenstraße",
+        "plz": 5301,
+        "ort": "Eugendorf",
+        "bnum": "a70718",
+        "name": "Die Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 622526840",
+        "fax": "+43 622526844",
+        "email": "office@apotheke-eugendorf.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5648028",
+        "SUBCD": "002",
+        "HNR": "18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.128409448682948,
+          47.863996385797684
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 67,
+        "strasse": "Handelsstraße",
+        "plz": 5162,
+        "ort": "Obertrum am See",
+        "bnum": "a70726",
+        "name": "Salus-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 62196050",
+        "fax": "+43 6219605016",
+        "email": "gaigg@salus-apotheke.at",
+        "url": "www.salus-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5662563",
+        "SUBCD": "001",
+        "HNR": "4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.082129342773166,
+          47.937066434548534
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 68,
+        "strasse": "Hans-Schmid-Platz",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70734",
+        "name": "Raphael-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662422020",
+        "fax": "+43 6624220204",
+        "email": "office@raphael-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7025219",
+        "SUBCD": "001",
+        "HNR": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.018233454035395,
+          47.80433436990729
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 69,
+        "strasse": "Hauptstraße",
+        "plz": 5600,
+        "ort": "Sankt Johann im Pongau",
+        "bnum": "a70742",
+        "name": "Vital Apotheke St. Johann im Pongau",
+        "typ": "öffentliche",
+        "tel": "+43 64125665",
+        "fax": "+43 6412566555",
+        "email": "office@vital-apo.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7284085",
+        "SUBCD": "001",
+        "HNR": "78"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.196303028132043,
+          47.34656788910698
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 70,
+        "strasse": "Europastraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70750",
+        "name": "Theresien-Apotheke im Europark",
+        "typ": "öffentliche",
+        "tel": "+43 662422040",
+        "fax": "+43 6624220404",
+        "email": "info@theresien-apotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7259959",
+        "SUBCD": "002",
+        "HNR": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.005910890985161,
+          47.81594699836204
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 71,
+        "strasse": "Salzburger Straße",
+        "plz": 5303,
+        "ort": "Thalgau",
+        "bnum": "a70769",
+        "name": "Apotheke Wartenfels",
+        "typ": "öffentliche",
+        "tel": "+43 623520183",
+        "fax": "+43 62352018320",
+        "email": "office@apotheke-wartenfels.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5669287",
+        "SUBCD": "001",
+        "HNR": "33"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.250398391738228,
+          47.84127487097451
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 72,
+        "strasse": "Gemeindeweg",
+        "plz": 5061,
+        "ort": "Glasenbach",
+        "bnum": "a70777",
+        "name": "Nautilus Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662621111",
+        "fax": "+43 66262111123",
+        "email": "office@nautilusapotheke.at",
+        "url": "www.nautilusapotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5646413",
+        "SUBCD": "001",
+        "HNR": "2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.089981566684411,
+          47.76903437240448
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 73,
+        "strasse": "Wiener Bundesstraße",
+        "plz": 5300,
+        "ort": "Esch",
+        "bnum": "a70785",
+        "name": "Barbara-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662664401",
+        "fax": "+43 6626644014",
+        "email": "barbaraapotheke@sbg.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7109228",
+        "SUBCD": "002",
+        "HNR": "5a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.084283131558436,
+          47.83090864983317
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 74,
+        "strasse": "Halleiner Landesstraße",
+        "plz": 5412,
+        "ort": "Puch bei Hallein",
+        "bnum": "a70793",
+        "name": "Arnika Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 624570058",
+        "fax": "+43 62457005810",
+        "email": "info@arnika-apotheke.at",
+        "url": "www.arnika-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 0,
+        "ADRCD": "7611663",
+        "SUBCD": "001",
+        "HNR": "69"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.090330022328194,
+          47.71463392469054
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 75,
+        "strasse": "Berchtesgadner Straße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70807",
+        "name": "Apotheke zum Lebensbaum",
+        "typ": "öffentliche",
+        "tel": "+43 662828182",
+        "fax": "+43 66282818211",
+        "email": "mail@apotheke-lebensbaum.at",
+        "url": "www.apotheke-lebensbaum.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7097674",
+        "SUBCD": "001",
+        "HNR": "35B"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.04192778793312,
+          47.77437945229184
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 76,
+        "strasse": "Almerstraße",
+        "plz": 5760,
+        "ort": "Saalfelden am Steinernen Meer",
+        "bnum": "a70815",
+        "name": "Aesculus Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 658276235",
+        "fax": "+43 65827623514",
+        "email": "office@aesculus-apotheke.at",
+        "url": "www.aesculus-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7082017",
+        "SUBCD": "001",
+        "HNR": "24"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.850483052037584,
+          47.42282331413178
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 77,
+        "strasse": "Am Gemeindeplatz",
+        "plz": 5761,
+        "ort": "Alm",
+        "bnum": "f70815",
+        "name": "Hochkönig Apotheke",
+        "typ": "Filiale",
+        "tel": "+43 658484888",
+        "fax": "+43 65827623514",
+        "email": "maria.alm@aesculus-apotheke.at",
+        "url": "www.aesculus-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5706755",
+        "SUBCD": "001",
+        "HNR": "4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.904748299210036,
+          47.406665774928214
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 78,
+        "strasse": "Hauptstraße",
+        "plz": 5302,
+        "ort": "Henndorf am Wallersee",
+        "bnum": "a70823",
+        "name": "Wallersee-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 621420375",
+        "fax": "+43 62142037520",
+        "email": "info@wallersee-apotheke.at",
+        "url": "www.wallersee-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5653587",
+        "SUBCD": "001",
+        "HNR": "67"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.189459179274982,
+          47.901218315570155
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 79,
+        "strasse": "Andreas-Thalhammer-Straße",
+        "plz": 5204,
+        "ort": "Straßwalchen",
+        "bnum": "a70831",
+        "name": "Lindenapotheke",
+        "typ": "öffentliche",
+        "tel": "+43 621520480",
+        "fax": "+43 6215204804",
+        "email": "info@lindenapotheke-strasswalchen.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5666234",
+        "SUBCD": "002",
+        "HNR": "17"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.259674662368985,
+          47.9767840837898
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 80,
+        "strasse": "Kletzlgutweg",
+        "plz": 5400,
+        "ort": "Burgfried",
+        "bnum": "a70858",
+        "name": "Wiestal-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 624575500",
+        "fax": "+43 62457550075",
+        "email": "office@wiestal-apotheke.at",
+        "url": "www.wiestal-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7250842",
+        "SUBCD": "001",
+        "HNR": "3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.106637647146517,
+          47.68424341201095
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 81,
+        "strasse": "Holzhauserweg",
+        "plz": 5112,
+        "ort": "Lamprechtshausen",
+        "bnum": "a70866",
+        "name": "Weidmoos-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 627420000",
+        "fax": "+43 62742000020",
+        "email": "office@weidmoosapotheke.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7364385",
+        "SUBCD": "001",
+        "HNR": "2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.955293853380407,
+          47.991729554908765
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 82,
+        "strasse": "Fürbergstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70874",
+        "name": "Herz-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662640958",
+        "fax": "+43 66264095858",
+        "email": "info@herz-apotheke.at",
+        "url": "www.herz-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5610952",
+        "SUBCD": "001",
+        "HNR": "18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.064880562222232,
+          47.808097907268355
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 83,
+        "strasse": "Wolfgangseestraße",
+        "plz": 5322,
+        "ort": "Hof bei Salzburg",
+        "bnum": "a70882",
+        "name": "Apotheke Hof",
+        "typ": "öffentliche",
+        "tel": "+43 622939100",
+        "fax": "+43 62293910010",
+        "email": "apotheke@beindl.com",
+        "url": "www.beindl.com",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5655376",
+        "SUBCD": "002",
+        "HNR": "18"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.20797044576443,
+          47.81989210316447
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 84,
+        "strasse": "Dorfstraße",
+        "plz": 5751,
+        "ort": "Maishofen",
+        "bnum": "a70890",
+        "name": "VitaMia-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 654268400",
+        "fax": "+43 6542684004",
+        "email": "apotheke@vitamia.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5706239",
+        "SUBCD": "001",
+        "HNR": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.807323514735304,
+          47.36113592117014
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 85,
+        "strasse": "Sportstraße",
+        "plz": 5733,
+        "ort": "Bramberg am Wildkogel",
+        "bnum": "a70904",
+        "name": "Kristall Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 656672816",
+        "fax": "+43 65667281666",
+        "email": "office@kristallapotheke.at",
+        "url": "www.kristallapotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7406037",
+        "SUBCD": "001",
+        "HNR": "331"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.354534631083197,
+          47.27336649102381
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 86,
+        "strasse": "Aigner Straße",
+        "plz": 5026,
+        "ort": "Salzburg",
+        "bnum": "a70912",
+        "name": "Naturpark Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662624790",
+        "fax": "+43 66262479010",
+        "email": "info@naturpark-apotheke.at",
+        "url": "www.naturpark-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5606489",
+        "SUBCD": "001",
+        "HNR": "78"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.080261441969718,
+          47.78348131004393
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 87,
+        "strasse": "Mühlbachstraße",
+        "plz": 5201,
+        "ort": "Seekirchen am Wallersee",
+        "bnum": "a70920",
+        "name": "Iris-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 621230860",
+        "fax": "+43 62123086040",
+        "email": "office@iris-apo.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5673781",
+        "SUBCD": "001",
+        "HNR": "23"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.119077502791606,
+          47.89576542697197
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 88,
+        "strasse": "Markt",
+        "plz": 5602,
+        "ort": "Wagrain Markt",
+        "bnum": "a70939",
+        "name": "Wald-Apotheke Wagrain",
+        "typ": "öffentliche",
+        "tel": "+43 64138377",
+        "fax": "+43 641383777",
+        "email": "office@waldapotheke-wagrain.at",
+        "url": "www.waldapotheke-wagrain.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 0,
+        "ADRCD": "7434385",
+        "SUBCD": "001",
+        "HNR": "96"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.297371532950775,
+          47.33439324475004
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 89,
+        "strasse": "Leogang",
+        "plz": 5771,
+        "ort": "Leogang",
+        "bnum": "a70947",
+        "name": "Apotheke Leogang",
+        "typ": "öffentliche",
+        "tel": "+43 658320483",
+        "fax": "+43 6583204834",
+        "email": "info@apotheke-leogang.at",
+        "url": "www.apotheke-leogang.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5704703",
+        "SUBCD": "002",
+        "HNR": "19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.761312404117053,
+          47.43930175058206
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 90,
+        "strasse": "Bahnhofstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a70955",
+        "name": "Apotheke Itzling \"Zur Sonne\"",
+        "typ": "öffentliche",
+        "tel": "+43 662265124",
+        "fax": "+43 6622651244",
+        "email": "info@apotheke-itzling.at",
+        "url": "www.apotheke-itzling.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7343806",
+        "SUBCD": "001",
+        "HNR": "33"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.050712741007573,
+          47.82257291718621
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 91,
+        "strasse": "Unterbergstraße",
+        "plz": 5611,
+        "ort": "Großarl",
+        "bnum": "a70963",
+        "name": "Apotheke Großarl",
+        "typ": "öffentliche",
+        "tel": "+43 641481283",
+        "fax": "+43 64148128311",
+        "email": "office@apotheke-grossarl.at",
+        "url": "www.apotheke-grossarl.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5684719",
+        "SUBCD": "001",
+        "HNR": "74"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.195368355052718,
+          47.241171305374046
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 92,
+        "strasse": "Dorfstraße",
+        "plz": 5161,
+        "ort": "Elixhausen",
+        "bnum": "a70971",
+        "name": "Helios Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662254034",
+        "fax": "+43 66225403499",
+        "email": "info@apotelix.at",
+        "url": null,
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7430248",
+        "SUBCD": "001",
+        "HNR": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.065430674749946,
+          47.86686652491355
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 93,
+        "strasse": "Paracelsusstraße",
+        "plz": 5110,
+        "ort": "Oberndorf bei Salzburg",
+        "bnum": "a70998",
+        "name": "Karolinen Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 627220860",
+        "fax": "+43 6272208604",
+        "email": "karolinen@apotheken-oberndorf.at",
+        "url": "www.apotheken-oberndorf.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5661378",
+        "SUBCD": "001",
+        "HNR": "45"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.94572958667756,
+          47.936479218327726
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 94,
+        "strasse": "Prof.Ferry Porsche Straße",
+        "plz": 5700,
+        "ort": "Zell am See",
+        "bnum": "a71005",
+        "name": "Areit Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 654253543",
+        "fax": "+43 6542535434",
+        "email": "info@areit-apotheke.at",
+        "url": "www.areit-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7582110",
+        "SUBCD": "001",
+        "HNR": "21"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.78828021738884,
+          47.29418282548996
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 95,
+        "strasse": "Gewerbestraße",
+        "plz": 5301,
+        "ort": "Eugendorf",
+        "bnum": "a71013",
+        "name": "Apotheke zum Goldenen Stern",
+        "typ": "öffentliche",
+        "tel": "+43 622529029",
+        "fax": "+43 62252902929",
+        "email": "buero@apo-eugendorf.at",
+        "url": "www.apo-eugendorf.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7580351",
+        "SUBCD": "001",
+        "HNR": "13a"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.131143828981749,
+          47.85798961877189
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 96,
+        "strasse": "Karolingerstraße",
+        "plz": 5020,
+        "ort": "Salzburg",
+        "bnum": "a71021",
+        "name": "Wassermann-Apotheke",
+        "typ": "öffentliche",
+        "tel": "+43 662828293",
+        "fax": "+43 6628282934",
+        "email": "office@wassermann-apotheke.at",
+        "url": "www.wassermann-apotheke.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7261455",
+        "SUBCD": "004",
+        "HNR": "1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.008269854979735,
+          47.7982961298514
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 97,
+        "strasse": "Michael-Walchhofer-Straße",
+        "plz": 5541,
+        "ort": "Altenmarkt im Pongau",
+        "bnum": "a71048",
+        "name": "APOTHEKE IM AGZ",
+        "typ": "öffentliche",
+        "tel": "+43 645251511000",
+        "fax": "+43 645251511009",
+        "email": "apotheke@agz-altenmarkt.at",
+        "url": "www.agz-altenmarkt.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7213624",
+        "SUBCD": "001",
+        "HNR": "13"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.421708055659881,
+          47.376843725800356
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 98,
+        "strasse": "Zeller Straße",
+        "plz": 5730,
+        "ort": "Mittersill",
+        "bnum": "a71064",
+        "name": "Apotheke Zur Quelle",
+        "typ": "öffentliche",
+        "tel": "+43 656270129",
+        "fax": null,
+        "email": "office@apotheke-zur-quelle.at",
+        "url": "www.apotheke-zur-quelle.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "5708321",
+        "SUBCD": "002",
+        "HNR": "61"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.493840554954701,
+          47.28549510741463
+        ]
+      }
+    },
+    {
+      "properties": {
+        "OBJECTID": 99,
+        "strasse": "Wolfgangseestraße",
+        "plz": 5350,
+        "ort": "Strobl",
+        "bnum": "a71056",
+        "name": "Apotheke Strobl OG",
+        "typ": "öffentliche",
+        "tel": "+43 613720123",
+        "fax": null,
+        "email": "admin@apostrobl.at",
+        "url": "www.apostrobl.at",
+        "barrierefreiheit": 1,
+        "defibrillator": 0,
+        "teilnahme_1450": 1,
+        "ADRCD": "7570219",
+        "SUBCD": "001",
+        "HNR": "6"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.485138533237235,
+          47.71311781617816
+        ]
+      }
+    }
+  ]
+}
