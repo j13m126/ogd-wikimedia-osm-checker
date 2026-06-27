@@ -31,6 +31,31 @@ docker run -p 8080:8080 -d skunk/ogd-wikimedia-osm-checker
 
 Browse to http://localhost:8080
 
+### Run with podman-compose (persistent data)
+The datasets in `data/` are baked into the image at build time, but the
+runtime OSM check status (`data/state/osm-status.json`) is stored in a named
+volume so it survives image updates.
+
+```sh
+git clone https://github.com/plepe/ogd-wikimedia-osm-checker
+cd ogd-wikimedia-osm-checker
+podman-compose up -d --build
+```
+
+Browse to http://localhost:43210
+
+To update to a new image version while keeping your stored check status:
+```sh
+git pull
+podman-compose build
+podman-compose up -d
+```
+
+The first run seeds the `osm-status-data` volume from the committed
+`data/state/osm-status.json`. Afterwards the volume is the source of truth and
+later image rebuilds preserve it, while the dataset files (`data/bda.json` etc.)
+are refreshed from each new image.
+
 ## Create an additional dataset
 There's a (German) screencast here: https://www.youtube.com/watch?v=4PKUCjS2HL8
 

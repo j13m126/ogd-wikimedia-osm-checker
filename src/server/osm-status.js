@@ -1,7 +1,10 @@
 const fs = require('fs')
+const path = require('path')
 
-const DB_FILE = 'data/osm-status.json'
+const DB_FILE = 'data/state/osm-status.json'
 const VALID = ['full', 'partial', 'none']
+
+fs.mkdirSync(path.dirname(DB_FILE), { recursive: true })
 
 function loadDb (callback) {
   fs.readFile(DB_FILE, 'utf8', (err, data) => {

@@ -28,7 +28,18 @@ function loadById (id, options, callback) {
         (err, result) => {
           if (err) { return done(err) }
 
-          done(null, result.body.entities[id])
+          const entities = result.body && result.body.entities
+          if (!entities) {
+            return done(new Error('Unexpected Wikidata response for ' + id))
+          }
+
+          // for redirected entities the JSON is keyed under the canonical id
+          const entity = entities[id] || entities[Object.keys(entities)[0]]
+          if (!entity) {
+            return done(new Error('Wikidata entity not found: ' + id))
+          }
+
+          done(null, entity)
         }
       )
     },
@@ -63,7 +74,6 @@ function loadById (id, options, callback) {
       let text = prop.querySelectorAll('.wikibase-statementview-mainsnak > .wikibase-snakview > .wikibase-snakview-value-container > .wikibase-snakview-body > .wikibase-snakview-value')
       text = Array.from(text)
       text.forEach((v, i) => {
-        console.log(id, i)
         if (!(id in result.claims)) {
           result.claims[id] = []
         }
@@ -71,7 +81,6 @@ function loadById (id, options, callback) {
         if (!(i in result.claims[id])) {
           result.claims[id][i] = {}
         }
-
 
         result.claims[id][i].text = v.textContent
       })

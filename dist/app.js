@@ -32151,6 +32151,7 @@ const modules = [
 
 let dataset
 let place
+let region
 let ob
 let currentItems = []
 let checkAllAborted = false
@@ -32213,9 +32214,19 @@ function init2 () {
     checkAllButton.onclick = onCheckAllClick
   }
 
+  const stopCheckAllButton = document.getElementById('stopCheckAll')
+  if (stopCheckAllButton) {
+    stopCheckAllButton.onclick = () => { checkAllAborted = true }
+  }
+
   const itemFilter = document.getElementById('itemFilter')
   if (itemFilter) {
     itemFilter.oninput = applyItemFilter
+  }
+
+  const statusFilter = document.getElementById('statusFilter')
+  if (statusFilter) {
+    statusFilter.onchange = applyItemFilter
   }
 
   if (global.location.hash) {
@@ -32246,10 +32257,13 @@ function updateDataset () {
 
   dataset = datasets[selectDataset.value]
   place = null
+  region = null
   ob = null
   searchActive = false
   const itemFilter = document.getElementById('itemFilter')
   if (itemFilter) itemFilter.value = ''
+  const statusFilter = document.getElementById('statusFilter')
+  if (statusFilter) statusFilter.value = ''
 
   dataset.showInfo(content)
 
@@ -32258,6 +32272,8 @@ function updateDataset () {
     select.removeChild(select.firstChild.nextSibling)
   }
   select.onchange = update
+
+  setupRegionFilter()
 
   loadingIndicator.start()
 
@@ -32294,6 +32310,82 @@ function updateDataset2 () {
   }
 }
 
+function setupRegionFilter () {
+  const regionSelect = document.getElementById('regionFilter')
+  if (!regionSelect) return
+
+  // reset to just the "all" option
+  while (regionSelect.firstChild.nextSibling) {
+    regionSelect.removeChild(regionSelect.firstChild.nextSibling)
+  }
+  regionSelect.value = ''
+
+  const regionField = dataset.refData.regionFilterField
+  if (!regionField) {
+    regionSelect.hidden = true
+    regionSelect.onchange = null
+    return
+  }
+
+  regionSelect.hidden = false
+  regionSelect.onchange = onRegionChange
+
+  dataset.getValues(regionField, (err, values) => {
+    if (err) { return }
+    values.forEach(value => {
+      const option = document.createElement('option')
+      option.appendChild(document.createTextNode(value))
+      regionSelect.appendChild(option)
+    })
+  })
+}
+
+function onRegionChange () {
+  const placeSelect = document.getElementById('placeFilter')
+  placeSelect.value = ''
+  updatePlaceOptions(() => update())
+}
+
+// repopulate the place dropdown with the places of the selected region
+function updatePlaceOptions (callback) {
+  const regionSelect = document.getElementById('regionFilter')
+  const placeSelect = document.getElementById('placeFilter')
+  const regionField = dataset.refData.regionFilterField
+  const placeField = dataset.refData.placeFilterField
+
+  while (placeSelect.firstChild.nextSibling) {
+    placeSelect.removeChild(placeSelect.firstChild.nextSibling)
+  }
+
+  if (!placeField) { return callback && callback() }
+
+  const options = {}
+  if (regionField && regionSelect && regionSelect.value) {
+    options.filter = {}
+    options.filter[regionField] = regionSelect.value
+  }
+
+  loadingIndicator.start()
+  dataset.getItems(options, (err, items) => {
+    loadingIndicator.end()
+    if (err) { return callback && callback(err) }
+
+    const seen = {}
+    items.forEach(item => {
+      const p = item[placeField]
+      if (p != null && p !== '') seen[p] = true
+    })
+
+    Object.keys(seen).sort().forEach(p => {
+      const option = document.createElement('option')
+      option.appendChild(document.createTextNode(p))
+      placeSelect.appendChild(option)
+    })
+
+    callback && callback()
+  })
+}
+
 function choose (path) {
   const [_dataset, id] = path.split(/\//)
 
@@ -32313,7 +32405,14 @@ function choose (path) {
   if (!id) {
     const content = document.getElementById('content')
     dataset.showInfo(content)
-    appendOsmStatusLists(content)
+    appendStatsLink(content)
+    return null
+  }
+
+  if (id === 'stats') {
+    const content = document.getElementById('content')
+    while (content.firstChild) content.removeChild(content.firstChild)
+    renderStats(content)
     return null
   }
 
@@ -32324,14 +32423,18 @@ function choose (path) {
 
     httpRequest('log.cgi?path=' + encodeURIComponent(path), {}, () => {})
 
-    const select = document.getElementById('placeFilter')
-    if (dataset.refData.placeFilterField) {
-      const place = item[dataset.refData.placeFilterField]
-      select.value = place
-    } else {
-      select.value = 'alle'
+    // when a search is active, keep the search result list instead of
+    // switching to the clicked item's place
+    if (!searchActive) {
+      const select = document.getElementById('placeFilter')
+      if (dataset.refData.placeFilterField) {
+        const place = item[dataset.refData.placeFilterField]
+        select.value = place
+      } else {
+        select.value = 'alle'
+      }
+      update()
     }
-    update()
 
     check(id)
   })
@@ -32339,11 +32442,15 @@ function choose (path) {
 
 function update () {
   const select = document.getElementById('placeFilter')
-  if (select.value === place && !searchActive) {
+  const regionSelect = document.getElementById('regionFilter')
+  const regionValue = regionSelect ? regionSelect.value : ''
+
+  if (select.value === place && regionValue === region && !searchActive) {
     return
   }
 
   place = select.value
+  region = regionValue
   const content = document.getElementById('content')
   while (content.firstChild) {
     content.removeChild(content.firstChild)
@@ -32368,9 +32475,15 @@ function update () {
   const dom = document.getElementById('data')
 
   const options = {}
+  const filter = {}
+  if (dataset.refData.regionFilterField && region) {
+    filter[dataset.refData.regionFilterField] = region
+  }
   if (dataset.refData.placeFilterField && place) {
-    options.filter = {}
-    options.filter[dataset.refData.placeFilterField] = place
+    filter[dataset.refData.placeFilterField] = place
+  }
+  if (Object.keys(filter).length) {
+    options.filter = filter
   }
 
   loadingIndicator.start()
@@ -32391,6 +32504,7 @@ function update () {
 
       const tr = document.createElement('tr')
       tr.id = dataset.id + '-' + id
+      tr.dataset.osmStatus = 'unchecked'
 
       const td = document.createElement('td')
       tr.appendChild(td)
@@ -32421,10 +32535,12 @@ function update () {
           const itemStatus = status[id]
           if (!itemStatus) return
           const listEntry = document.getElementById(dataset.id + '-' + id)
-          if (!listEntry || listEntry.querySelector('.osm-confirmed')) return
+          if (!listEntry) return
+          const statusName = itemStatus === true ? 'full' : itemStatus
+          listEntry.dataset.osmStatus = statusName
+          if (listEntry.querySelector('.osm-confirmed')) return
           const a = listEntry.querySelector('a')
           if (!a) return
-          const statusName = itemStatus === true ? 'full' : itemStatus
           const tick = document.createElement('span')
           tick.className = 'osm-confirmed osm-' + statusName
           tick.title = tickTitles[statusName] || ''
@@ -32436,6 +32552,7 @@ function update () {
             a.appendChild(tick)
           }
         })
+        applyItemFilter()
       })
       .catch(() => {})
 
@@ -32447,7 +32564,7 @@ function update () {
 function applyItemFilter () {
   const input = document.getElementById('itemFilter')
   if (!input) return
-  const query = input.value.trim().toLowerCase()
+  const query = input.value
   const wasActive = searchActive
   searchActive = query.length > 0
 
@@ -32460,110 +32577,176 @@ function applyItemFilter () {
   const table = document.getElementById('data')
   if (!table) return
 
+  const statusFilter = document.getElementById('statusFilter')
+  const statusValue = statusFilter ? statusFilter.value : ''
+
   Array.from(table.getElementsByTagName('tr')).forEach(tr => {
     if (!tr.id) return // skip header
-    if (!query) {
-      tr.style.display = ''
-      return
+
+    let visible = true
+    if (query) {
+      visible = tr.textContent.includes(query)
     }
-    const text = tr.textContent.toLowerCase()
-    tr.style.display = text.includes(query) ? '' : 'none'
+    if (visible && statusValue) {
+      visible = (tr.dataset.osmStatus || 'unchecked') === statusValue
+    }
+    tr.style.display = visible ? '' : 'none'
   })
 }
 
-function appendOsmStatusLists (content) {
+function appendStatsLink (content) {
   if (!dataset) return
-  const container = document.createElement('div')
-  container.className = 'osm-status-lists'
-  content.appendChild(container)
-  renderOsmStatusLists(container)
+  const p = document.createElement('p')
+  const a = document.createElement('a')
+  a.href = '#' + dataset.id + '/stats'
+  a.textContent = 'Statistik nach Ort'
+  p.appendChild(a)
+  content.appendChild(p)
 }
 
-function renderOsmStatusLists (container) {
+function renderStats (content) {
   if (!dataset) return
   const datasetId = dataset.id
 
-  while (container.firstChild) container.removeChild(container.firstChild)
+  const h1 = document.createElement('h1')
+  h1.textContent = 'Statistik: ' + (dataset.titleLong || dataset.title)
+  content.appendChild(h1)
 
-  global.fetch('osm-status.cgi?dataset=' + encodeURIComponent(datasetId))
-    .then(r => r.json())
-    .then(status => {
-      if (!dataset || dataset.id !== datasetId) return
-      const partialIds = Object.keys(status).filter(k => status[k] === 'partial')
-      const noneIds = Object.keys(status).filter(k => status[k] === 'none')
-      if (!partialIds.length && !noneIds.length) return
+  const back = document.createElement('p')
+  const backLink = document.createElement('a')
+  backLink.href = '#' + datasetId
+  backLink.textContent = '← zurück zur Übersicht'
+  back.appendChild(backLink)
+  content.appendChild(back)
 
-      dataset.getItems({}, (err, items) => {
-        if (err) return
-        if (!dataset || dataset.id !== datasetId) return
-
-        const byId = {}
-        items.forEach((item, index) => {
-          const itemId = dataset.refData.idField ? item[dataset.refData.idField] : index
-          byId[itemId] = { item, index }
-        })
-
-        const button = document.createElement('button')
-        button.type = 'button'
-        button.className = 'recheck-status'
-        button.textContent = 'Alle erneut prüfen'
-        button.onclick = () => onRecheckStatusClick(button, container, partialIds.concat(noneIds))
-        container.appendChild(button)
-
-        renderStatusList(container, 'Teilweise gefunden (partial)', partialIds, byId)
-        renderStatusList(container, 'Nicht gefunden (none)', noneIds, byId)
-      })
-    })
-    .catch(() => {})
-}
-
-let recheckAborted = false
-function onRecheckStatusClick (button, container, ids) {
-  if (button.dataset.running === '1') {
-    recheckAborted = true
+  const placeField = dataset.refData.placeFilterField
+  if (!placeField) {
+    const p = document.createElement('p')
+    p.textContent = 'Keine Orts-Information verfügbar.'
+    content.appendChild(p)
     return
   }
-  if (!ids.length) return
 
-  recheckAborted = false
-  button.dataset.running = '1'
-  const originalLabel = button.textContent
-  button.textContent = 'Abbrechen'
+  const loading = document.createElement('p')
+  loading.textContent = 'Lade Daten ...'
+  content.appendChild(loading)
 
-  async.eachSeries(ids, (id, next) => {
-    if (recheckAborted) return next()
-    check(id, {}, () => next())
-  }, () => {
-    button.dataset.running = ''
-    button.textContent = originalLabel
-    recheckAborted = false
-    renderOsmStatusLists(container)
-  })
-}
+  Promise.all([
+    global.fetch('osm-status.cgi?dataset=' + encodeURIComponent(datasetId)).then(r => r.json()),
+    new Promise(resolve => dataset.getItems({}, (err, items) => resolve(err ? [] : items)))
+  ]).then(([status, items]) => {
+    if (!dataset || dataset.id !== datasetId) return
+    loading.remove()
 
-function renderStatusList (parent, title, ids, byId) {
-  if (!ids.length) return
-  const h2 = document.createElement('h2')
-  h2.textContent = title + ' (' + ids.length + ')'
-  parent.appendChild(h2)
+    const byPlace = {}
+    items.forEach((item, index) => {
+      const itemId = dataset.refData.idField ? item[dataset.refData.idField] : index
+      const place = item[placeField] || '(unbekannt)'
+      if (!byPlace[place]) byPlace[place] = { total: 0, checked: 0, full: 0, partial: 0, none: 0 }
+      byPlace[place].total++
+      const s = status[itemId] === true ? 'full' : status[itemId]
+      if (s) {
+        byPlace[place].checked++
+        if (s in byPlace[place]) byPlace[place][s]++
+      }
+    })
 
-  const ul = document.createElement('ul')
-  ids.forEach(id => {
-    const entry = byId[id]
-    if (!entry) return
-    const li = document.createElement('li')
-    const a = document.createElement('a')
-    a.href = '#' + dataset.id + '/' + id
-    const text = dataset.listFormat(entry.item, entry.index)
-    if (typeof text === 'string') {
-      a.innerHTML = text
-    } else {
-      a.appendChild(text)
+    const rows = Object.keys(byPlace)
+      .filter(p => byPlace[p].checked > 0)
+      .map(p => {
+        const s = byPlace[p]
+        return {
+          place: p,
+          total: s.total,
+          checked: s.checked,
+          full: s.full,
+          partial: s.partial,
+          none: s.none,
+          pct: s.total ? s.full / s.total : 0
+        }
+      })
+
+    if (!rows.length) {
+      const p = document.createElement('p')
+      p.textContent = 'Noch keine Orte geprüft.'
+      content.appendChild(p)
+      return
     }
-    li.appendChild(a)
-    ul.appendChild(li)
+
+    const columns = [
+      { key: 'place', label: 'Ort' },
+      { key: 'checked', label: 'Geprüft' },
+      { key: 'full', label: 'Vollständig' },
+      { key: 'partial', label: 'Teilweise' },
+      { key: 'none', label: 'Nicht gefunden' },
+      { key: 'pct', label: '% vollständig' }
+    ]
+
+    const sortState = { key: 'place', dir: 1 }
+
+    const table = document.createElement('table')
+    table.className = 'stats'
+    const thead = document.createElement('thead')
+    const headRow = document.createElement('tr')
+    columns.forEach(col => {
+      const th = document.createElement('th')
+      th.textContent = col.label
+      th.className = 'sortable'
+      th.onclick = () => {
+        if (sortState.key === col.key) {
+          sortState.dir = -sortState.dir
+        } else {
+          sortState.key = col.key
+          sortState.dir = col.key === 'place' ? 1 : -1
+        }
+        renderBody()
+      }
+      headRow.appendChild(th)
+    })
+    thead.appendChild(headRow)
+    table.appendChild(thead)
+    const tbody = document.createElement('tbody')
+    table.appendChild(tbody)
+    content.appendChild(table)
+
+    function renderBody () {
+      while (tbody.firstChild) tbody.removeChild(tbody.firstChild)
+
+      const sorted = rows.slice().sort((a, b) => {
+        const va = a[sortState.key]
+        const vb = b[sortState.key]
+        if (va < vb) return -1 * sortState.dir
+        if (va > vb) return 1 * sortState.dir
+        return 0
+      })
+
+      Array.from(headRow.children).forEach((th, i) => {
+        const col = columns[i]
+        let label = col.label
+        if (col.key === sortState.key) {
+          label += sortState.dir > 0 ? ' ▲' : ' ▼'
+        }
+        th.textContent = label
+      })
+
+      sorted.forEach(r => {
+        const tr = document.createElement('tr')
+        tr.innerHTML =
+          '<td>' + escHTML(r.place) + '</td>' +
+          '<td>' + r.checked + ' / ' + r.total + '</td>' +
+          '<td>' + r.full + '</td>' +
+          '<td>' + r.partial + '</td>' +
+          '<td>' + r.none + '</td>' +
+          '<td>' + Math.round(r.pct * 100) + ' %</td>'
+        tbody.appendChild(tr)
+      })
+    }
+
+    renderBody()
+  }).catch(err => {
+    if (!dataset || dataset.id !== datasetId) return
+    loading.textContent = 'Fehler beim Laden der Statistik: ' + err
   })
-  parent.appendChild(ul)
 }
 
 function check (id, options = {}, done) {
@@ -32628,12 +32811,8 @@ function check (id, options = {}, done) {
 
 function onCheckAllClick () {
   const button = document.getElementById('checkAll')
-  if (!button) return
-
-  if (button.dataset.running === '1') {
-    checkAllAborted = true
-    return
-  }
+  const stopButton = document.getElementById('stopCheckAll')
+  if (!button || button.dataset.running === '1') return
 
   if (!dataset || !currentItems.length) return
 
@@ -32642,15 +32821,16 @@ function onCheckAllClick () {
 
   checkAllAborted = false
   button.dataset.running = '1'
-  const originalLabel = button.textContent
-  button.textContent = 'Abbrechen'
+  button.disabled = true
+  if (stopButton) stopButton.hidden = false
 
   async.eachSeries(visibleIds, (id, next) => {
     if (checkAllAborted) return next()
     check(id, {}, () => next())
   }, () => {
     button.dataset.running = ''
-    button.textContent = originalLabel
+    button.disabled = false
+    if (stopButton) stopButton.hidden = true
     checkAllAborted = false
   })
 }
@@ -34640,13 +34820,12 @@ module.exports = function osmAddTags (ob, el) {
 
   if (ob.data.wikidataSelected) {
     compiledTags.wikidata = ob.data.wikidataSelected.id
-  } else if (ob.data.commons) {
-    const files = ob.data.commons.filter(page => page.title.match(/^File:/))
+  }
+
+  if (ob.data.commons) {
     const categories = ob.data.commons.filter(page => page.title.match(/^Category:/))
     if (categories.length) {
       compiledTags.wikimedia_commons = categories[0].title
-    } else if (files.length) {
-      compiledTags.image = files[0].title
     }
   }
 
@@ -35000,13 +35179,6 @@ module.exports={
   },
   "P1619": {
     "tag": "start_date"
-  },
-  "P2951": {
-    "tag": "ref:at:bda",
-    "additionalTags": {
-      "heritage": "2",
-      "heritage:operator": "bda"
-    }
   },
   "P8430": {
     "tag": "ref:wien:kultur"

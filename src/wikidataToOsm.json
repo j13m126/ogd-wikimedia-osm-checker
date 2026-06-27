@@ -36,13 +36,6 @@
   "P1619": {
     "tag": "start_date"
   },
-  "P2951": {
-    "tag": "ref:at:bda",
-    "additionalTags": {
-      "heritage": "2",
-      "heritage:operator": "bda"
-    }
-  },
   "P8430": {
     "tag": "ref:wien:kultur"
   }

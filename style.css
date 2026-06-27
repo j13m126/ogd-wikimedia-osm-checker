@@ -28,6 +28,7 @@ a .address {
 }
 #filter {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
 }
 #filter > select,
@@ -42,6 +43,29 @@ a .address {
 table#data {
   width: 100%;
   border-collapse: collapse;
+}
+table.stats {
+  border-collapse: collapse;
+  margin-top: 0.5em;
+}
+table.stats th,
+table.stats td {
+  padding: 0.25em 0.5em;
+  border: 1px solid #ccc;
+}
+table.stats th {
+  background: #eee;
+  text-align: left;
+}
+table.stats th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+table.stats th.sortable:hover {
+  background: #ddd;
+}
+table.stats td:not(:first-child) {
+  text-align: right;
 }
 table#data > tr > td {
   padding: 0.125em 0.25em;

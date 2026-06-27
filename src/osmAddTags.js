@@ -11,13 +11,12 @@ module.exports = function osmAddTags (ob, el) {
 
   if (ob.data.wikidataSelected) {
     compiledTags.wikidata = ob.data.wikidataSelected.id
-  } else if (ob.data.commons) {
-    const files = ob.data.commons.filter(page => page.title.match(/^File:/))
+  }
+
+  if (ob.data.commons) {
     const categories = ob.data.commons.filter(page => page.title.match(/^Category:/))
     if (categories.length) {
       compiledTags.wikimedia_commons = categories[0].title
-    } else if (files.length) {
-      compiledTags.image = files[0].title
     }
   }
 

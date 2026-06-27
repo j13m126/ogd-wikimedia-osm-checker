@@ -17,6 +17,7 @@ file:
   name: bda.json
 refData:
   idField: HERIS-ID
+  regionFilterField: Bundesland
   placeFilterField: Gemeinde
   listFieldTitle: Objekttitel
   listFieldAddress: Adresse
@@ -78,3 +79,4 @@ osm:
   addTags: |
     heritage=2
     heritage:operator=bda
+    ref:at:bda:heris={{ item['HERIS-ID'] }}

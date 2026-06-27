@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s --max-time 60 \"http://localhost:8080/wikipedia.cgi?list=AT-BDA&id=id-45240\")",
+      "Bash(curl -s --max-time 60 \"http://localhost:8080/wikipedia.cgi?list=AT-BDA&id=id-9835\")",
+      "Bash(curl -s --max-time 60 \"http://localhost:8080/wikipedia.cgi?list=AT-BDA&id=id-9832\")",
+      "Bash(curl -s -A \"ogd-wikimedia-osm-checker/0.5.1\" --max-time 20 \"https://query.wikidata.org/sparql?format=json&query=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP9154%20%2245240%22%20%7D%20LIMIT%205\")",
+      "Bash(curl -s -A \"ogd-wikimedia-osm-checker/0.5.1\" --max-time 20 \"https://de.wikipedia.org/w/index.php?search=hastemplate%3A%22Denkmalliste+%C3%96sterreich+Tabellenzeile%22+insource%3A%2F%7C+*WD-Item+*%3D+*%28Q38014482%29%5B%5E0-9%5D%2F\")",
+      "Bash(npm view *)",
+      "Read(//tmp/**)",
+      "Bash(npm pack *)",
+      "Bash(tar -xzf wikipedia-list-extractor-0.4.1.tgz -C /tmp/wle041/)",
+      "Bash(mkdir -p /tmp/wle041)",
+      "Read(//tmp/wle041/package/src/**)",
+      "Bash(awk '/templateData *\\\\\\(/{f=1} f{print} f&&/^  }/{exit}' src/Examinee.js)",
+      "Bash(grep -rn \"renderTemplate\" src/Dataset.js | head -3; echo \"---\"; sed -n '/^function renderTemplate/,/^}/p' src/Dataset.js; grep -rn \"renderTemplate\" src/*.js | grep require)",
+      "Bash(node -c src/server/wikidata.js)",
+      "Bash(node -e \"const d=require\\('./data/bda.json'\\); console.log\\('fields:', Object.keys\\(d[0]\\)\\); const bl={}; d.forEach\\(i=>bl[i.Bundesland]=\\(bl[i.Bundesland]||0\\)+1\\); console.log\\('Bundesländer:', bl\\)\")",
+      "Bash(node -e \"require\\('yaml'\\).parse\\(require\\('fs'\\).readFileSync\\('datasets/bda.yaml','utf8'\\)\\); console.log\\('yaml OK'\\)\")",
+      "Bash(git mv *)",
+      "Bash(node -c src/server/osm-status.js)",
+      "Bash(node -e \"require\\('./src/server/osm-status.js'\\); console.log\\('module loads + mkdir ran'\\)\")",
+      "Bash(node -e \"require\\('yaml'\\).parse\\(require\\('fs'\\).readFileSync\\('compose.yaml','utf8'\\)\\); console.log\\('compose.yaml valid YAML'\\)\")",
+      "Bash(command -v podman-compose)",
+      "Bash(podman-compose -f compose.yaml config)",
+      "Bash(cp data/state/osm-status.json /tmp/osm-status.backup.json)",
+      "Bash(node -e ' *)",
+      "Bash(mv /tmp/osm-status.backup.json data/state/osm-status.json)",
+      "Bash(node -e \"const y=require\\('yaml'\\).parse\\(require\\('fs'\\).readFileSync\\('compose.yaml','utf8'\\)\\); console.log\\('valid YAML'\\); console.log\\('services:', Object.keys\\(y.services\\)\\); console.log\\('overpass env keys:', Object.keys\\(y.services.overpass.environment\\)\\); console.log\\('volumes:', Object.keys\\(y.volumes\\)\\)\")"
+    ],
+    "additionalDirectories": [
+      "/home/lukas/Projekte/ogd-wikimedia-osm-checker/src"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+services:
+  osm-checker:
+    build: .
+    container_name: osm-checker
+    restart: always
+    ports:
+      - "127.0.0.1:43210:8080"
+    volumes:
+      # runtime OSM check status; auto-seeded from the image on first run,
+      # then preserved across image rebuilds
+      - osm-status-data:/usr/src/app/data/state
+      # access logs
+      - osm-checker-log:/usr/src/app/log
+
+volumes:
+  osm-status-data:
+  osm-checker-log:
