@@ -691,14 +691,35 @@ function onCheckAllClick () {
   button.disabled = true
   if (stopButton) stopButton.hidden = false
 
-  async.eachSeries(visibleIds, (id, next) => {
+  // Run checks 10 at a time so their Wikidata/OSM lookups fire in parallel
+  // (the server coalesces them into batched requests, see src/server/wikidata.js).
+  // Each item is checked "headless" (its own Examinee, into a detached message
+  // container) so the shared #details panel and global `ob` are left untouched;
+  // per-row checkmarks are still updated by the checks themselves
+  // (see CheckOsmLoadFromRefOrWikidata → updateListTick).
+  loadingIndicator.start()
+  async.eachLimit(visibleIds, 10, (id, next) => {
     if (checkAllAborted) return next()
-    check(id, {}, () => next())
+    checkHeadless(id, {}, () => next())
   }, () => {
+    loadingIndicator.end()
     button.dataset.running = ''
     button.disabled = false
     if (stopButton) stopButton.hidden = true
     checkAllAborted = false
+  })
+}
+
+// Run all checks for a single item without touching the detail panel or the
+// global `ob`, so many items can be checked concurrently.
+function checkHeadless (id, options, done) {
+  dataset.getItem(id, (err, entry) => {
+    if (err) { return done(err) }
+
+    const messagesContainer = document.createElement('div')
+    const examinee = new Examinee(id, entry, dataset)
+    examinee.initMessages(messagesContainer)
+    examinee.runChecks(dataset, options, (e) => done(e))
   })
 }
 

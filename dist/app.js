@@ -32129,7 +32129,7 @@ module.exports = class Examinee extends EventEmitter {
   }
 }
 
-},{"./checks/index":83,"./loader-commons.js":94,"./loader-geocoder.js":95,"./loader-osm.js":96,"./loader-wikidata.js":97,"./loader-wikipedia.js":98,"./wikidataSimplify":110,"events":28,"foreach":30}],60:[function(require,module,exports){
+},{"./checks/index":83,"./loader-commons.js":94,"./loader-geocoder.js":95,"./loader-osm.js":96,"./loader-wikidata.js":97,"./loader-wikipedia.js":98,"./wikidataSimplify":111,"events":28,"foreach":30}],60:[function(require,module,exports){
 (function (global){(function (){
 const hash = require('sheet-router/hash')
 const escHTML = require('html-escape')
@@ -32824,14 +32824,35 @@ function onCheckAllClick () {
   button.disabled = true
   if (stopButton) stopButton.hidden = false
 
-  async.eachSeries(visibleIds, (id, next) => {
+  // Run checks 10 at a time so their Wikidata/OSM lookups fire in parallel
+  // (the server coalesces them into batched requests, see src/server/wikidata.js).
+  // Each item is checked "headless" (its own Examinee, into a detached message
+  // container) so the shared #details panel and global `ob` are left untouched;
+  // per-row checkmarks are still updated by the checks themselves
+  // (see CheckOsmLoadFromRefOrWikidata → updateListTick).
+  loadingIndicator.start()
+  async.eachLimit(visibleIds, 10, (id, next) => {
     if (checkAllAborted) return next()
-    check(id, {}, () => next())
+    checkHeadless(id, {}, () => next())
   }, () => {
+    loadingIndicator.end()
     button.dataset.running = ''
     button.disabled = false
     if (stopButton) stopButton.hidden = true
     checkAllAborted = false
+  })
+}
+
+// Run all checks for a single item without touching the detail panel or the
+// global `ob`, so many items can be checked concurrently.
+function checkHeadless (id, options, done) {
+  dataset.getItem(id, (err, entry) => {
+    if (err) { return done(err) }
+
+    const messagesContainer = document.createElement('div')
+    const examinee = new Examinee(id, entry, dataset)
+    examinee.initMessages(messagesContainer)
+    examinee.runChecks(dataset, options, (e) => done(e))
   })
 }
 
@@ -32864,7 +32885,7 @@ function selectCurrent () {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Dataset.js":58,"./Examinee.js":59,"./httpRequest.js":91,"./loadingIndicator":99,"./news.js":100,"./showLast":105,"./timestamp":107,"./wikidataToOsm.js":112,"async":21,"foreach":30,"html-escape":34,"sheet-router/hash":49}],61:[function(require,module,exports){
+},{"./Dataset.js":58,"./Examinee.js":59,"./httpRequest.js":91,"./loadingIndicator":99,"./news.js":100,"./showLast":105,"./timestamp":107,"./wikidataToOsm.js":113,"async":21,"foreach":30,"html-escape":34,"sheet-router/hash":49}],61:[function(require,module,exports){
 const Boundingbox = require('boundingbox')
 const turf = {
   pointToLineDistance: require('@turf/point-to-line-distance').default,
@@ -34839,10 +34860,16 @@ module.exports = function osmAddTags (ob, el) {
     })
   }
 
+  // 'ref:at:bda' (the old Objekt-ID tag) is deprecated. If the OSM object still
+  // carries it, mark it for removal: an empty value tells JOSM to delete the key.
+  if (el && el.tags && 'ref:at:bda' in el.tags) {
+    compiledTags['ref:at:bda'] = ''
+  }
+
   return compiledTags
 }
 
-},{"./wikidataToOsm.js":112}],102:[function(require,module,exports){
+},{"./wikidataToOsm.js":113}],102:[function(require,module,exports){
 const escHTML = require('html-escape')
 
 const editLink = require('./editLink.js')
@@ -34870,8 +34897,23 @@ module.exports = function osmFormat (el, ob, appendTitle = '') {
 
   ret += '<ul class="check">'
 
-  if (Object.keys(compiledTags).length) {
-    ret += '<li class="error">Fehlende Tags: ' + printCompiledTags(compiledTags) + '</li>'
+  // empty value => the tag should be removed (see osmAddTags.js)
+  const addTags = {}
+  const removeTags = []
+  Object.keys(compiledTags).forEach(k => {
+    if (compiledTags[k] === '') {
+      removeTags.push(k)
+    } else {
+      addTags[k] = compiledTags[k]
+    }
+  })
+
+  if (Object.keys(addTags).length) {
+    ret += '<li class="error">Fehlende Tags: ' + printCompiledTags(addTags) + '</li>'
+  }
+
+  if (removeTags.length) {
+    ret += '<li class="error">Veraltete Tags entfernen: ' + removeTags.map(k => '<tt>' + escHTML(k) + '</tt>').join(', ') + '</li>'
   }
 
   let recTags = recommendTags.concat()
@@ -35053,6 +35095,7 @@ module.exports = function twigRender (template, data) {
 const forEach = require('foreach')
 
 const printAttrList = require('./printAttrList.js')
+const label = require('./wikidataLabel.js')
 
 const links = {
   P18: function (value) {
@@ -35065,15 +35108,6 @@ const links = {
     const coords = value.mainsnak.datavalue.value
     return 'https://openstreetmap.org/?mlat=' + coords.latitude + '&mlon=' + coords.longitude + '#map=19/' + coords.latitude + '/' + coords.longitude + '">' + coords.latitude + ', ' + coords.longitude
   }
-}
-
-function label (labels) {
-  const lang = ['de-at', 'de', 'en'].filter(l => labels[l])
-  if (!lang.length) {
-    return ''
-  }
-
-  return labels[lang[0]].value
 }
 
 module.exports = function wikidataFormat (ob) {
@@ -35112,7 +35146,27 @@ module.exports = function wikidataFormat (ob) {
   return printAttrList(attrList) // + '<pre>' + JSON.stringify(ob, null, '  ') + '</pre>'
 }
 
-},{"./printAttrList.js":103,"foreach":30}],110:[function(require,module,exports){
+},{"./printAttrList.js":103,"./wikidataLabel.js":110,"foreach":30}],110:[function(require,module,exports){
+/**
+ * Pick a human readable label from a Wikidata labels/descriptions object,
+ * preferring Austrian German, then German, then English.
+ * @param {Object} labels - map of language code to { language, value }
+ * @return {string} the preferred label, or '' if none of the preferred languages exist
+ */
+module.exports = function wikidataLabel (labels) {
+  if (!labels) {
+    return ''
+  }
+
+  const lang = ['de-at', 'de', 'en'].filter(l => labels[l])
+  if (!lang.length) {
+    return ''
+  }
+
+  return labels[lang[0]].value
+}
+
+},{}],111:[function(require,module,exports){
 module.exports = function wikidataSimplify (data) {
   const result = {
     id: data.id
@@ -35141,7 +35195,7 @@ module.exports = function wikidataSimplify (data) {
   return result
 }
 
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 module.exports={
   "P84": {
     "tag": "architect:wikidata",
@@ -35185,7 +35239,7 @@ module.exports={
   }
 }
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 (function (global){(function (){
 const async = require('async')
 const forEach = require('foreach')
@@ -35283,4 +35337,4 @@ module.exports = {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./wikidataToOsm.json":111,"async":21,"foreach":30}]},{},[60]);
+},{"./wikidataToOsm.json":112,"async":21,"foreach":30}]},{},[60]);

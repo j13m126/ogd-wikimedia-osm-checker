@@ -30,5 +30,11 @@ module.exports = function osmAddTags (ob, el) {
     })
   }
 
+  // 'ref:at:bda' (the old Objekt-ID tag) is deprecated. If the OSM object still
+  // carries it, mark it for removal: an empty value tells JOSM to delete the key.
+  if (el && el.tags && 'ref:at:bda' in el.tags) {
+    compiledTags['ref:at:bda'] = ''
+  }
+
   return compiledTags
 }
