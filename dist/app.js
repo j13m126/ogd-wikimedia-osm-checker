@@ -34643,14 +34643,32 @@ module.exports = {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./Cache":56,"async":21,"query-string":46}],96:[function(require,module,exports){
 (function (global){(function (){
+const async = require('async')
+
 const httpRequest = require('./httpRequest.js')
+const Cache = require('./Cache')
+
+const cache = new Cache()
 
 let active = null
 const queue = []
-const delay = 2000
+// The Overpass instance is local (see below), so no politeness delay is needed
+// between requests. Raise this when pointing at a public Overpass API.
+const delay = 0
+
+// Cache key for a set of queries. Sorted, so the same set in a different order
+// still hits the cache.
+function cacheId (queries) {
+  return queries.concat().sort()
+}
 
 function load (queries, options, callback) {
-  queue.push([queries, options, callback])
+  const data = cache.get(cacheId(queries), options)
+  if (data !== undefined) {
+    return async.setImmediate(() => callback(null, data))
+  }
+
+  queue.push([queries, callback])
 
   if (!active) {
     next()
@@ -34662,7 +34680,7 @@ function next () {
     return
   }
 
-  const [queries, options, callback] = queue.shift()
+  const [queries, callback] = queue.shift()
   active = true
 
   const body = '[out:json];(' + queries.join('') + ');out tags bb;'
@@ -34680,7 +34698,10 @@ function next () {
       }, delay)
 
       if (err) { return callback(err) }
-      callback(null, result.body.elements)
+
+      const elements = result.body.elements
+      cache.add(cacheId(queries), elements)
+      callback(null, elements)
     }
   )
 }
@@ -34688,13 +34709,17 @@ function next () {
 module.exports = {
   load,
 
+  cached (queries) {
+    return cache.get(cacheId(queries))
+  },
+
   includes (arr, el) {
     return !!arr.filter(e => e.type === el.type && e.id === el.id).length
   }
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./httpRequest.js":91}],97:[function(require,module,exports){
+},{"./Cache":56,"./httpRequest.js":91,"async":21}],97:[function(require,module,exports){
 (function (global){(function (){
 const async = require('async')
 const queryString = require('query-string')
@@ -34710,14 +34735,17 @@ module.exports = {
       (query, done) => {
         const data = cache.get(query, options)
         if (data !== undefined) {
-          return done(null, data)
+          // async.each discards the value passed to done(), so cached entries
+          // have to be merged into `results` here as well.
+          data.filter(r => r).forEach(r => { results[r.id] = r })
+          return done(null)
         }
 
         global.fetch('wikidata.cgi?' + queryString.stringify(query) + '&' + queryString.stringify(options))
           .then(res => res.json())
           .then(result => {
             cache.add(query, result)
-            result.forEach(r => results[r.id] = r)
+            result.filter(r => r).forEach(r => { results[r.id] = r })
             done(null)
           })
           .catch(e => done(e))
