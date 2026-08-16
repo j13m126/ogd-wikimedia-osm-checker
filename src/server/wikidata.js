@@ -1,221 +1,332 @@
 const async = require('async')
-const JSDOM = require('jsdom').JSDOM
 const fetch = require('node-fetch')
 const findWikidataItems = require('find-wikidata-items')
 
-const httpRequest = require('../httpRequest.js')
-const Cache = require('../Cache')
+const cache = require('./wikidataCache')
 const getUserAgent = require('../getUserAgent.js')
+const wikidataLabel = require('../wikidataLabel.js')
+const wikidataValueText = require('../wikidataValueText.js')
 
-const active = []
-const pending = []
-const cacheById = new Cache()
-const maxActive = 1
-let interval
+const API = 'https://www.wikidata.org/w/api.php'
+const SPARQL = 'https://query.wikidata.org/sparql?query='
+const MAX_IDS = 50 // wbgetentities accepts up to 50 ids per request
+const maxActive = 5 // concurrent outbound requests (stay polite to Wikimedia)
+const DISPATCH_GAP = 120 // ms minimum spacing between dispatches
 
-function loadById (id, options, callback) {
-  const data = cacheById.get(id, options)
-  if (data !== undefined) {
-    return callback(null, data)
+let active = 0
+let timer = null
+
+// pending entity-id loads, deduplicated by id: id -> [callback, ...]
+const pendingIds = new Map()
+// pending refProperty lookups: [{ key, id, options, resolve }]
+const pendingRefs = []
+// pending SPARQL queries: [{ options, resolve }]
+const pendingQueries = []
+
+// session-wide label cache (property titles + referenced item labels)
+const labelCache = {}
+
+// -- scheduler -------------------------------------------------------------
+
+function hasWork () {
+  return pendingIds.size || pendingRefs.length || pendingQueries.length
+}
+
+function schedule () {
+  if (timer || active >= maxActive || !hasWork()) {
+    return
+  }
+  timer = global.setTimeout(() => { timer = null; drain() }, 0)
+}
+
+function drain () {
+  if (active >= maxActive || !hasWork()) {
+    return
   }
 
-  async.parallel([
-    done => {
-      httpRequest('https://www.wikidata.org/wiki/Special:EntityData/' + id + '.json',
-        {
-          responseType: 'json'
-        },
-        (err, result) => {
-          if (err) { return done(err) }
+  active++
+  let released = false
+  const release = () => {
+    if (released) { return }
+    released = true
+    active--
+    schedule()
+  }
 
-          const entities = result.body && result.body.entities
-          if (!entities) {
-            return done(new Error('Unexpected Wikidata response for ' + id))
-          }
+  dispatchOne(release)
 
-          // for redirected entities the JSON is keyed under the canonical id
-          const entity = entities[id] || entities[Object.keys(entities)[0]]
-          if (!entity) {
-            return done(new Error('Wikidata entity not found: ' + id))
-          }
+  // stagger further dispatches a little for politeness
+  if (hasWork() && active < maxActive && !timer) {
+    timer = global.setTimeout(() => { timer = null; drain() }, DISPATCH_GAP)
+  }
+}
 
-          done(null, entity)
-        }
-      )
-    },
-    done => {
-      httpRequest('https://www.wikidata.org/wiki/' + id + '?uselang=de',
-        {
-        },
-        (err, result) => {
-          if (err) { return done(err) }
-
-          const dom = new JSDOM(result.body)
-
-          done(null, dom)
-        }
-      )
+function dispatchOne (release) {
+  if (pendingIds.size) {
+    const ids = []
+    for (const id of pendingIds.keys()) {
+      ids.push(id)
+      if (ids.length >= MAX_IDS) { break }
     }
-  ], (err, [result, dom]) => {
-    if (err) {
-      return callback(err)
-    }
+    const resolvers = {}
+    ids.forEach(id => { resolvers[id] = pendingIds.get(id); pendingIds.delete(id) })
+    return loadEntities(ids, resolvers, release)
+  }
 
-    result.claimsTitle = {}
-
-    const properties = dom.window.document.querySelectorAll('div.wikibase-statementgrouplistview > div.wikibase-listview > div')
-    properties.forEach(prop => {
-      const id = prop.getAttribute('id')
-
-      const propTitle = prop.querySelector('div.wikibase-statementgroupview-property-label > a').textContent
-
-      result.claimsTitle[id] = propTitle
-
-      let text = prop.querySelectorAll('.wikibase-statementview-mainsnak > .wikibase-snakview > .wikibase-snakview-value-container > .wikibase-snakview-body > .wikibase-snakview-value')
-      text = Array.from(text)
-      text.forEach((v, i) => {
-        if (!(id in result.claims)) {
-          result.claims[id] = []
-        }
-
-        if (!(i in result.claims[id])) {
-          result.claims[id][i] = {}
-        }
-
-        result.claims[id][i].text = v.textContent
-      })
+  if (pendingRefs.length) {
+    const key = pendingRefs[0].key
+    const batch = []
+    const rest = []
+    pendingRefs.forEach(ref => {
+      if (ref.key === key && batch.length < MAX_IDS) {
+        batch.push(ref)
+      } else {
+        rest.push(ref)
+      }
     })
+    pendingRefs.length = 0
+    rest.forEach(r => pendingRefs.push(r))
+    return loadRefs(key, batch, release)
+  }
 
-    cacheById.add(id, result)
-    callback(null, result)
+  if (pendingQueries.length) {
+    const q = pendingQueries.shift()
+    return loadQuery(q.options, q.resolve, release)
+  }
+
+  release()
+}
+
+// -- request entry points --------------------------------------------------
+
+/**
+ * Look up a single entity by id, using the cache and the batched id queue.
+ */
+function requestEntity (id, options, callback) {
+  cache.get(id, options, (err, data) => {
+    if (err) { return callback(err) }
+    if (data !== undefined) { return callback(null, data) }
+
+    if (pendingIds.has(id)) {
+      pendingIds.get(id).push(callback)
+    } else {
+      pendingIds.set(id, [callback])
+    }
+    schedule()
   })
 }
 
-function next (options) {
-  // console.log('done', JSON.stringify(options))
-  active.splice(active.indexOf(options), 1)
+/**
+ * Look up several entities by id, returning an array of the found ones.
+ */
+function requestEntities (ids, options, callback) {
+  async.map(ids,
+    (id, done) => requestEntity(id, options, done),
+    (err, entities) => {
+      if (err) { return callback(err) }
+      callback(null, entities.filter(e => e))
+    }
+  )
 }
 
-function _next () {
-  if (!pending.length) {
-    global.clearInterval(interval)
-    interval = null
-    return
-  }
+// -- loaders (each holds an active slot only while doing real HTTP work) ----
 
-  if (active.length >= maxActive) {
-    return
-  }
-
-  const req = pending.shift()
-  active.push(req[0])
-  _request(req[0], req[1])
-}
-
-function request (options, callback) {
-  if (options.query) {
-    // accept arbitrary query
-  } else if (!options.key || !options.key.match(/^(id|P[0-9]+)$/)) {
-    return callback(new Error('illegal key'))
-  } else if (!options.id) {
-    return callback(new Error('illegal id'))
-  }
-
-  pending.push([options, callback])
-
-  if (!interval) {
-    interval = global.setInterval(_next, 1000)
-  }
-}
-
-function _request (options, callback) {
-  // console.log('start', JSON.stringify(options))
-  if (options.key === 'id') {
-    return loadById(options.id,
-      options,
-      (err, result) => {
-        callback(err, [result])
-        next(options)
-      }
-    )
-  }
-
-  if (options.query) {
-    return loadByQuery(options,
-      (err, result) => {
-        callback(err, result)
-        next(options)
-      }
-    )
-  }
-
-  const query = {}
-  query[options.key] = options.id
-
-  const _options = JSON.parse(JSON.stringify(options))
-  delete _options.key
-  delete _options.id
-
-  findWikidataItems([query], _options, (err, results) => {
-    next(options)
-    if (err) { return callback(err) }
-
-    if (!results[0]) {
-      return callback(null, [])
+function loadEntities (ids, resolvers, release) {
+  apiGetEntities(ids, 'claims|labels|descriptions|sitelinks', (err, entities) => {
+    if (err) {
+      ids.forEach(id => resolvers[id].forEach(cb => cb(err)))
+      return release()
     }
 
-    processResults(results, options, callback)
+    resolveLabels(entities, () => {
+      ids.forEach(id => {
+        const raw = entities[id]
+        let processed = null
+        if (raw && !('missing' in raw)) {
+          processed = processEntity(raw)
+          cache.set(id, processed)
+        }
+        resolvers[id].forEach(cb => cb(null, processed))
+      })
+      release()
+    })
   })
 }
 
-function loadByQuery (options, callback) {
-  fetch('https://query.wikidata.org/sparql?query=' + encodeURIComponent(options.query),
+function loadRefs (key, batch, release) {
+  const queries = batch.map(b => {
+    const q = {}
+    q[key] = b.id
+    return q
+  })
+
+  findWikidataItems(queries, {}, (err, results) => {
+    release()
+
+    if (err) {
+      return batch.forEach(b => b.resolve(err))
+    }
+
+    batch.forEach((b, i) => {
+      const ids = Object.keys((results && results[i]) || {})
+      requestEntities(ids, b.options, b.resolve)
+    })
+  })
+}
+
+function loadQuery (options, resolve, release) {
+  fetch(SPARQL + encodeURIComponent(options.query),
     {
       headers: {
         // lower case to avoid forbidden request headers, see:
         // https://github.com/ykzts/node-xmlhttprequest/pull/18/commits/7f73611dc3b0dd15b0869b566f60b64cd7aa3201
         'user-agent': getUserAgent(),
         accept: 'application/json'
-      },
-      responseType: 'json'
+      }
     })
     .then(response => response.json())
     .then(result => {
-      next(options)
+      release()
 
-      const list = {}
+      const ids = []
       result.results.bindings.forEach(item => {
-        const id = item.item.value.match(/(Q[0-9]+)$/)[1]
-        list[id] = null
+        const m = item.item && item.item.value.match(/(Q[0-9]+)$/)
+        if (m) { ids.push(m[1]) }
       })
 
       const _options = JSON.parse(JSON.stringify(options))
       delete _options.query
 
-      processResults([list], _options, callback)
+      requestEntities(ids, _options, resolve)
     })
     .catch(err => {
-      next(options)
-      global.setTimeout(() => callback(err), 0)
+      release()
+      global.setTimeout(() => resolve(err), 0)
     })
 }
 
-function processResults (results, options, callback) {
-  async.map(Object.keys(results[0]),
-    (id, done) => {
-      const _options = JSON.parse(JSON.stringify(options))
-      _options.key = 'id'
-      _options.id = id
+// -- Wikidata API helpers --------------------------------------------------
 
-      request(
-        _options,
-        (err, r) => done(err, r.length ? r[0] : null)
-      )
+function apiGetEntities (ids, props, callback) {
+  const url = API + '?action=wbgetentities&format=json' +
+    '&ids=' + ids.join('|') +
+    '&props=' + props +
+    '&languages=de-at|de|en'
+
+  fetch(url,
+    {
+      headers: {
+        'user-agent': getUserAgent(),
+        accept: 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.error) {
+        return callback(new Error('Wikidata API error: ' + (result.error.info || result.error.code)))
+      }
+      callback(null, result.entities || {})
+    })
+    .catch(err => callback(err))
+}
+
+/**
+ * Resolve labels for every property and referenced item across a batch of
+ * entities into the session labelCache (best-effort; failures are ignored).
+ */
+function resolveLabels (entities, callback) {
+  const needed = new Set()
+
+  Object.keys(entities).forEach(id => {
+    const entity = entities[id]
+    if (!entity || !entity.claims) { return }
+
+    Object.keys(entity.claims).forEach(prop => {
+      if (!(prop in labelCache)) { needed.add(prop) }
+
+      entity.claims[prop].forEach(claim => {
+        const snak = claim.mainsnak
+        if (snak && snak.snaktype === 'value' && snak.datavalue && snak.datavalue.type === 'wikibase-entityid') {
+          const vid = snak.datavalue.value.id
+          if (vid && !(vid in labelCache)) { needed.add(vid) }
+        }
+      })
+    })
+  })
+
+  const ids = [...needed]
+  if (!ids.length) { return callback() }
+
+  const chunks = []
+  for (let i = 0; i < ids.length; i += MAX_IDS) {
+    chunks.push(ids.slice(i, i + MAX_IDS))
+  }
+
+  async.eachSeries(chunks,
+    (chunk, done) => {
+      apiGetEntities(chunk, 'labels', (err, result) => {
+        if (err) { return done() }
+        chunk.forEach(id => {
+          const entity = result[id]
+          labelCache[id] = (entity && wikidataLabel(entity.labels)) || id
+        })
+        done()
+      })
     },
-    (err, results) => {
-      callback(err, results)
-    }
+    () => callback()
   )
+}
+
+/**
+ * Add `claimsTitle` (property labels) and per-claim `.text` (rendered value),
+ * matching the shape the rest of the app expects.
+ */
+function processEntity (entity) {
+  entity.claimsTitle = {}
+
+  Object.keys(entity.claims || {}).forEach(prop => {
+    entity.claimsTitle[prop] = labelCache[prop] || prop
+
+    entity.claims[prop].forEach(claim => {
+      const snak = claim.mainsnak
+      if (snak && snak.snaktype === 'value' && snak.datavalue && snak.datavalue.type === 'wikibase-entityid') {
+        claim.text = labelCache[snak.datavalue.value.id] || snak.datavalue.value.id
+      } else {
+        claim.text = wikidataValueText(snak)
+      }
+    })
+  })
+
+  return entity
+}
+
+// -- public interface ------------------------------------------------------
+
+function request (options, callback) {
+  if (options.query) {
+    pendingQueries.push({ options, resolve: callback })
+    schedule()
+    return
+  }
+
+  if (!options.key || !options.key.match(/^(id|P[0-9]+)$/)) {
+    return callback(new Error('illegal key'))
+  }
+
+  if (!options.id) {
+    return callback(new Error('illegal id'))
+  }
+
+  if (options.key === 'id') {
+    return requestEntity(options.id, options, (err, entity) => {
+      if (err) { return callback(err) }
+      callback(null, entity ? [entity] : [])
+    })
+  }
+
+  // key is a property (Pxxx): resolve the referenced item(s) via SPARQL
+  pendingRefs.push({ key: options.key, id: options.id, options, resolve: callback })
+  schedule()
 }
 
 module.exports = request

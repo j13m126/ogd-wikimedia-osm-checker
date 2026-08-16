@@ -25,8 +25,23 @@ module.exports = function osmFormat (el, ob, appendTitle = '') {
 
   ret += '<ul class="check">'
 
-  if (Object.keys(compiledTags).length) {
-    ret += '<li class="error">Fehlende Tags: ' + printCompiledTags(compiledTags) + '</li>'
+  // empty value => the tag should be removed (see osmAddTags.js)
+  const addTags = {}
+  const removeTags = []
+  Object.keys(compiledTags).forEach(k => {
+    if (compiledTags[k] === '') {
+      removeTags.push(k)
+    } else {
+      addTags[k] = compiledTags[k]
+    }
+  })
+
+  if (Object.keys(addTags).length) {
+    ret += '<li class="error">Fehlende Tags: ' + printCompiledTags(addTags) + '</li>'
+  }
+
+  if (removeTags.length) {
+    ret += '<li class="error">Veraltete Tags entfernen: ' + removeTags.map(k => '<tt>' + escHTML(k) + '</tt>').join(', ') + '</li>'
   }
 
   let recTags = recommendTags.concat()

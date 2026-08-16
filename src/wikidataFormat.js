@@ -1,6 +1,7 @@
 const forEach = require('foreach')
 
 const printAttrList = require('./printAttrList.js')
+const label = require('./wikidataLabel.js')
 
 const links = {
   P18: function (value) {
@@ -13,15 +14,6 @@ const links = {
     const coords = value.mainsnak.datavalue.value
     return 'https://openstreetmap.org/?mlat=' + coords.latitude + '&mlon=' + coords.longitude + '#map=19/' + coords.latitude + '/' + coords.longitude + '">' + coords.latitude + ', ' + coords.longitude
   }
-}
-
-function label (labels) {
-  const lang = ['de-at', 'de', 'en'].filter(l => labels[l])
-  if (!lang.length) {
-    return ''
-  }
-
-  return labels[lang[0]].value
 }
 
 module.exports = function wikidataFormat (ob) {
