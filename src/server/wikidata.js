@@ -1,8 +1,8 @@
 const async = require('async')
-const fetch = require('node-fetch')
 const findWikidataItems = require('find-wikidata-items')
 
 const cache = require('./wikidataCache')
+const { fetchJson, retry } = require('./fetchRetry')
 const getUserAgent = require('../getUserAgent.js')
 const wikidataLabel = require('../wikidataLabel.js')
 const wikidataValueText = require('../wikidataValueText.js')
@@ -160,7 +160,7 @@ function loadRefs (key, batch, release) {
     return q
   })
 
-  findWikidataItems(queries, {}, (err, results) => {
+  retry(done => findWikidataItems(queries, {}, done), (err, results) => {
     release()
 
     if (err) {
@@ -175,7 +175,7 @@ function loadRefs (key, batch, release) {
 }
 
 function loadQuery (options, resolve, release) {
-  fetch(SPARQL + encodeURIComponent(options.query),
+  fetchJson(SPARQL + encodeURIComponent(options.query),
     {
       headers: {
         // lower case to avoid forbidden request headers, see:
@@ -183,10 +183,11 @@ function loadQuery (options, resolve, release) {
         'user-agent': getUserAgent(),
         accept: 'application/json'
       }
-    })
-    .then(response => response.json())
-    .then(result => {
+    },
+    (err, result) => {
       release()
+
+      if (err) { return resolve(err) }
 
       const ids = []
       result.results.bindings.forEach(item => {
@@ -198,11 +199,8 @@ function loadQuery (options, resolve, release) {
       delete _options.query
 
       requestEntities(ids, _options, resolve)
-    })
-    .catch(err => {
-      release()
-      global.setTimeout(() => resolve(err), 0)
-    })
+    }
+  )
 }
 
 // -- Wikidata API helpers --------------------------------------------------
@@ -213,21 +211,23 @@ function apiGetEntities (ids, props, callback) {
     '&props=' + props +
     '&languages=de-at|de|en'
 
-  fetch(url,
+  fetchJson(url,
     {
       headers: {
         'user-agent': getUserAgent(),
         accept: 'application/json'
       }
-    })
-    .then(response => response.json())
-    .then(result => {
+    },
+    (err, result) => {
+      if (err) { return callback(err) }
+
       if (result.error) {
         return callback(new Error('Wikidata API error: ' + (result.error.info || result.error.code)))
       }
+
       callback(null, result.entities || {})
-    })
-    .catch(err => callback(err))
+    }
+  )
 }
 
 /**
